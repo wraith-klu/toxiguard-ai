@@ -103,7 +103,14 @@ export default function Login() {
 
         {/* Right Image */}
         <div className="auth-right">
-          <img src="/lll.jpg" alt="ToxiGuard AI" />
+          <video
+            src="/auth-bg.mp4"
+            poster="/auth-bg.jpg"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
         </div>
       </div>
     </div>

@@ -80,11 +80,13 @@ vaderSentiment==3.3.2
 
 # ------------------------------------------------------------------
 # LLM INTEGRATION (OpenRouter / OpenAI-compatible API)
-# openai       — OpenAI SDK (used as OpenRouter client)
-# httpx        — Async HTTP client (used by openai + direct calls)
+# openai               — OpenAI SDK (used as OpenRouter client)
+# httpx                — Async HTTP client (used by openai + direct calls)
+# google-generativeai  — Google Gemini SDK (secondary LLM fallback)
 # ------------------------------------------------------------------
 openai==1.51.0
 httpx==0.27.2
+google-genai>=2.0.0
 
 # ------------------------------------------------------------------
 # ENVIRONMENT & CONFIGURATION

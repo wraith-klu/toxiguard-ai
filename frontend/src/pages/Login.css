@@ -216,7 +216,8 @@
   overflow: hidden;
 }
 
-.auth-right img {
+.auth-right img,
+.auth-right video {
   width: 100%;
   height: 100%;
   object-fit: cover;
