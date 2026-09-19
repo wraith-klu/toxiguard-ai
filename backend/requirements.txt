@@ -107,7 +107,7 @@ pandas==2.2.2
 # anyio     — Async compatibility layer (used by FastAPI/httpx)
 # aiofiles  — Async file I/O for streaming responses
 # ------------------------------------------------------------------
-+anyio>=4.8.0,<5.0.0
+anyio>=4.8.0,<5.0.0
 aiofiles==24.1.0
 
 # ------------------------------------------------------------------
