@@ -8,18 +8,36 @@ from openai import OpenAI
 from app.core.logger import logger
 from app.core.config import settings
 
-# OPENROUTER CLIENT
+# ── OPENROUTER CLIENT ────────────────────────────────────────────────────────
 if not settings.openrouter_api_key:
-    raise RuntimeError("OPENROUTER_API_KEY not found in environment")
-
-client = OpenAI(
-    api_key=settings.openrouter_api_key,
-    base_url="https://openrouter.ai/api/v1",
-    timeout=settings.llm_timeout
-)
+    logger.warning("[LLM] OPENROUTER_API_KEY not set — OpenRouter calls will be skipped")
+    client = None
+else:
+    client = OpenAI(
+        api_key=settings.openrouter_api_key,
+        base_url="https://openrouter.ai/api/v1",
+        timeout=settings.llm_timeout
+    )
 
 OPENROUTER_MODEL = settings.openrouter_model
 OPENROUTER_FALLBACK_MODEL = settings.openrouter_fallback_model
+
+# ── GEMINI CLIENT (lazy) ──────────────────────────────────────────────────────
+# Loaded on first use to avoid import errors if the package is not installed.
+GEMINI_MODEL = settings.gemini_model
+GEMINI_API_KEY = settings.gemini_api_key
+
+
+def _call_gemini(messages: list[dict]) -> str:
+    """Call Google Gemini and return the raw text response."""
+    from google import genai  # lazy import -- requires: pip install google-genai
+    client_gemini = genai.Client(api_key=GEMINI_API_KEY)
+    # Merge system + user messages into a single prompt for Gemini
+    system_text = next((m["content"] for m in messages if m["role"] == "system"), "")
+    user_text   = next((m["content"] for m in messages if m["role"] == "user"),   "")
+    prompt = f"{system_text}\n\nText to analyse:\n{user_text}"
+    resp = client_gemini.models.generate_content(model=GEMINI_MODEL, contents=prompt)
+    return resp.text or ""
 
 # LRU CACHE (replaces naive cooldown)
 
@@ -152,26 +170,44 @@ def analyze_toxicity_llm(text: str) -> dict:
         ]
 
         # ---------- CALL MODEL ----------
-        # Try primary model first
-        try:
-            response = client.chat.completions.create(
-                model=OPENROUTER_MODEL,
-                messages=messages,
-                temperature=settings.llm_temperature,
-                max_tokens=settings.llm_max_tokens
-            )
-        except Exception as primary_err:
-            logger.warning(f"[LLM] Primary model error: {primary_err} — trying fallback")
-            # Fallback to secondary model
-            response = client.chat.completions.create(
-                model=OPENROUTER_FALLBACK_MODEL,
-                messages=messages,
-                temperature=settings.llm_temperature + 0.1,
-                max_tokens=settings.llm_max_tokens
-            )
+        # Tier 1: OpenRouter primary
+        raw_text: str | None = None
 
-        content = response.choices[0].message.content
-        raw_text = (content or "").strip()
+        if client is not None:
+            try:
+                response = client.chat.completions.create(
+                    model=OPENROUTER_MODEL,
+                    messages=messages,
+                    temperature=settings.llm_temperature,
+                    max_tokens=settings.llm_max_tokens
+                )
+                raw_text = (response.choices[0].message.content or "").strip()
+            except Exception as primary_err:
+                logger.warning(f"[LLM] Primary model error: {primary_err} — trying OpenRouter fallback")
+                # Tier 2: OpenRouter fallback model
+                try:
+                    response = client.chat.completions.create(
+                        model=OPENROUTER_FALLBACK_MODEL,
+                        messages=messages,
+                        temperature=settings.llm_temperature + 0.1,
+                        max_tokens=settings.llm_max_tokens
+                    )
+                    raw_text = (response.choices[0].message.content or "").strip()
+                except Exception as fallback_err:
+                    logger.warning(f"[LLM] OpenRouter fallback error: {fallback_err} — trying Gemini")
+
+        # Tier 3: Google Gemini (secondary fallback)
+        if raw_text is None:
+            if not GEMINI_API_KEY:
+                logger.error("[LLM] All LLM providers exhausted and GEMINI_API_KEY is not set")
+                return DEFAULT_SAFE_RESPONSE
+            try:
+                raw_text = _call_gemini(messages).strip()
+                logger.info("[LLM] Response obtained via Gemini fallback")
+            except Exception as gemini_err:
+                logger.error(f"[LLM] Gemini fallback also failed: {gemini_err}")
+                return DEFAULT_SAFE_RESPONSE
+
         parsed = _extract_json(raw_text)
 
         # ---------- VALIDATE EXPLANATION ----------

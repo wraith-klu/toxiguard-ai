@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     llm_temperature: float = 0.4
     llm_max_tokens: int = 2048
 
+    # Optional: Google Gemini API Key (secondary fallback if OpenRouter is unreachable)
+    gemini_model: str = "gemini-2.5-flash"
+    gemini_api_key: str = ""
+
     # ── DATABASE ─────────────────────────────────────────────────────
     database_url: str = "sqlite:///./toxiguard.db"
 
