@@ -170,7 +170,8 @@ export default function Home() {
             <span className="category-pill">Production Safety Engine</span>
 
             <h1 className="hero-heading">
-              Hybrid content moderation engineered for real-time applications.
+              Hybrid content moderation<br />
+              engineered for real&#8209;time applications.
             </h1>
 
             <p className="hero-lead">

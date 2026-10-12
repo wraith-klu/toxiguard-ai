@@ -112,11 +112,14 @@
 
 .hero-heading {
   font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 4.2vw, 3.5rem);
-  line-height: 1.1;
+  font-size: clamp(2.3rem, 3.8vw, 3.4rem);
+  line-height: 1.12;
   letter-spacing: -0.028em;
   color: var(--app-ink);
   margin: 0 0 20px;
+  text-wrap: balance;
+  hyphens: manual;
+  word-break: keep-all;
 }
 
 .hero-lead {
