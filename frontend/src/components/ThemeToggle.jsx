@@ -2,11 +2,18 @@ import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("tg-theme") || "light";
+    return localStorage.getItem("tg-theme") || "dark";
   });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
     localStorage.setItem("tg-theme", theme);
   }, [theme]);
 
@@ -18,96 +25,81 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className="theme-toggle"
+      type="button"
+      className="theme-switcher-btn"
       onClick={toggle}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       title={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
-      <div className={`theme-toggle-track ${isDark ? "dark" : ""}`}>
-        <span className="theme-icon sun">☀️</span>
-        <span className="theme-icon moon">🌙</span>
-        <div className="theme-toggle-thumb" />
-      </div>
+      {isDark ? (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      ) : (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
 
       <style>{`
-        .theme-toggle {
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          display: flex;
+        .theme-switcher-btn {
+          width: 36px;
+          height: 36px;
+          display: inline-flex;
           align-items: center;
+          justify-content: center;
+          background: var(--app-surface);
+          border: 1px solid var(--app-rule);
+          border-radius: 8px;
+          color: var(--app-ink-subtle);
+          cursor: pointer;
+          transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+          padding: 0;
           flex-shrink: 0;
         }
 
-        .theme-toggle-track {
-          position: relative;
-          width: 52px;
-          height: 28px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #fef3c7, #fde68a);
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          overflow: hidden;
+        .theme-switcher-btn:hover {
+          background: var(--app-surface-hover);
+          color: var(--app-ink);
+          border-color: var(--app-accent);
         }
 
-        .theme-toggle-track.dark {
-          background: linear-gradient(135deg, #1e1b4b, #312e81);
-          border-color: rgba(255, 255, 255, 0.1);
+        .theme-switcher-btn:active {
+          transform: scale(0.96);
         }
 
-        .theme-icon {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 14px;
-          transition: all 0.4s ease;
-          line-height: 1;
-        }
-
-        .theme-icon.sun {
-          left: 6px;
-          opacity: 1;
-        }
-
-        .theme-icon.moon {
-          right: 6px;
-          opacity: 0;
-        }
-
-        .theme-toggle-track.dark .theme-icon.sun {
-          opacity: 0;
-          transform: translateY(-50%) rotate(-90deg);
-        }
-
-        .theme-toggle-track.dark .theme-icon.moon {
-          opacity: 1;
-        }
-
-        .theme-toggle-thumb {
-          position: absolute;
-          top: 3px;
-          left: 3px;
-          width: 22px;
-          height: 22px;
-          border-radius: 50%;
-          background: #fff;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .theme-toggle-track.dark .theme-toggle-thumb {
-          left: calc(100% - 25px);
-          background: #c7d2fe;
-          box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-        }
-
-        .theme-toggle:hover .theme-toggle-thumb {
-          transform: scale(1.08);
-        }
-
-        .theme-toggle:active .theme-toggle-thumb {
-          width: 26px;
+        .theme-switcher-btn:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 3px var(--app-accent-soft);
+          border-color: var(--app-accent);
         }
       `}</style>
     </button>

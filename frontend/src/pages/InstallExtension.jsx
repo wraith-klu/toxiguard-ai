@@ -8,123 +8,126 @@ export default function InstallExtension() {
   const navigate = useNavigate();
 
   const installationSteps = [
-    { n: "1", text: "Download the extension ZIP file using the button above." },
-    { n: "2", text: "Extract the downloaded ZIP file to a local folder on your computer." },
-    { n: "3", text: <>Start the <a href={BACKEND_URL} target="_blank" rel="noopener noreferrer">backend server</a> by clicking this link to wake it up.</> },
-    { n: "4", text: <>Open Google Chrome and navigate to <strong>chrome://extensions</strong>.</> },
-    { n: "5", text: <>Enable <strong>Developer Mode</strong> using the toggle in the top-right corner.</> },
-    { n: "6", text: <>Click the <strong>Load Unpacked</strong> button in the top-left corner.</> },
-    { n: "7", text: "Select the folder where you extracted the extension ZIP file." },
+    { n: "1", text: "Download the extension ZIP archive containing the manifest and compiled scripts." },
+    { n: "2", text: "Extract the downloaded ZIP archive into a dedicated local directory on your machine." },
+    { n: "3", text: <>Ensure your <a href={BACKEND_URL} target="_blank" rel="noopener noreferrer">FastAPI backend instance</a> is running locally or hosted on an accessible domain.</> },
+    { n: "4", text: <>Open Google Chrome (or any Chromium browser) and enter <code>chrome://extensions</code> into the address bar.</> },
+    { n: "5", text: <>Toggle <strong>Developer mode</strong> in the upper right corner of the Extensions dashboard.</> },
+    { n: "6", text: <>Click <strong>Load unpacked</strong> and select the directory where you extracted the extension files.</> },
+    { n: "7", text: "Verify the ToxiGuard shield icon appears in your browser toolbar." },
   ];
-  
+
   const usageSteps = [
-    { n: "1", text: "Click the ToxiGuard icon in your Chrome toolbar to open the control panel." },
-    { n: "2", text: "Log in with your email or use the public guest demo mode directly." },
-    { n: "3", text: "Enable the real-time moderation filter using the main toggle switch." },
-    { n: "4", text: "Navigate to social media platforms like Instagram, X, LinkedIn, etc." },
-    { n: "5", text: "Watch ToxiGuard scan, flag, and auto-moderate toxic feed comments in real time!" },
-    { n: "6", text: "Select any text on any website to see the dynamic floating shield and scan it instantly." }
+    { n: "1", text: "Select the ToxiGuard icon in the browser toolbar to open the control panel." },
+    { n: "2", text: "Enter your registered API key or toggle the guest demonstration mode." },
+    { n: "3", text: "Confirm the real-time filter toggle is set to Active." },
+    { n: "4", text: "Navigate to Instagram or supported web forum comment sections." },
+    { n: "5", text: "ToxiGuard scans dynamic feed items and visually masks comments that trigger moderation thresholds." },
+    { n: "6", text: "Use the View Original button on any masked comment to inspect the underlying text." },
   ];
 
   return (
     <div className="install-page">
       <Header />
 
-      {/* Hero Section (Space-Dark Theme) */}
-      <div className="install-hero-wrapper">
-        <div className="install-hero-glow" />
-        <div className="install-hero-grid" />
-
-        <div className="install-hero-content animate-fade-in-up">
-          <span className="install-tag">
-            <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#6366f1" }} />
-            Chrome Extension
-          </span>
-          <h1>
-            Install the <span className="install-hero-gradient">ToxiGuard Shield</span>
-          </h1>
-          <p>
-            Experience seamless, real-time AI moderation across Instagram, X/Twitter, 
-            LinkedIn, and other websites. Control your social feed on any desktop or mobile browser.
+      <main className="install-main-container">
+        {/* Header / Hero */}
+        <header className="install-header">
+          <span className="category-pill">Browser Extension</span>
+          <h1 className="install-title">Install the ToxiGuard Extension</h1>
+          <p className="install-lead">
+            Client-side content safety for Chromium-based browsers. Evaluates dynamic comment
+            threads in real time with zero server storage of viewed social pages.
           </p>
 
-          <a href="/extension.zip" download className="install-download-btn">
-            Download Extension ZIP
-            <span>→</span>
-          </a>
-
-          <div className="install-note">
-            Compatible with Chrome, Brave, Edge, Opera, and mobile Chromium-based browsers
+          <div className="install-cta-group">
+            <a href="/extension.zip" download className="btn-primary">
+              Download Extension Package (.zip)
+            </a>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => navigate("/dashboard")}
+            >
+              Open API Dashboard
+            </button>
           </div>
-        </div>
-      </div>
+          <p className="install-compatibility">
+            Tested on Google Chrome, Brave, Arc, Microsoft Edge, and Chromium 114+
+          </p>
+        </header>
 
-      {/* Main Content (Blended Light Theme) */}
-      <div className="install-main-container">
-        
-        {/* Installation Steps */}
-        <section className="install-section animate-fade-in-up delay-2">
-          <div className="install-section-header">
-            <h2>Easy 1-Minute Setup</h2>
-            <p>Follow these quick steps to get ToxiGuard running in developer mode</p>
+        {/* Installation Instructions */}
+        <section className="install-section">
+          <div className="section-title-wrap">
+            <h2 className="install-section-title">Developer Mode Setup</h2>
+            <p className="install-section-desc">
+              Follow these seven steps to load the unpacked extension in your browser:
+            </p>
           </div>
 
-          <div className="install-steps-grid">
-            {installationSteps.map((s, i) => (
-              <div key={i} className="install-step-card">
-                <div className="install-step-num-badge">{s.n}</div>
-                <p>{s.text}</p>
+          <div className="install-step-list">
+            {installationSteps.map((step) => (
+              <div key={step.n} className="install-step-row">
+                <span className="step-counter">{step.n}</span>
+                <div className="step-content">
+                  <p>{step.text}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* How to Use */}
-        <section className="install-section animate-fade-in-up delay-3">
-          <div className="install-section-header">
-            <h2>How to Use</h2>
-            <p>Control the filter, moderate your feeds, and audit custom text</p>
+        {/* Verification and Operation */}
+        <section className="install-section">
+          <div className="section-title-wrap">
+            <h2 className="install-section-title">Operational Workflow</h2>
+            <p className="install-section-desc">
+              How the extension interacts with active discussion threads:
+            </p>
           </div>
 
-          <div className="install-steps-grid">
-            {usageSteps.map((s, i) => (
-              <div key={i} className="install-step-card">
-                <div className="install-step-num-badge">{s.n}</div>
-                <p>{s.text}</p>
+          <div className="install-step-list">
+            {usageSteps.map((step) => (
+              <div key={step.n} className="install-step-row">
+                <span className="step-counter">{step.n}</span>
+                <div className="step-content">
+                  <p>{step.text}</p>
+                </div>
               </div>
             ))}
           </div>
-
-          <div className="install-tip-box">
-            <span className="install-tip-icon">💡</span>
-            <p>
-              <strong>Pro-tip:</strong> If comments on social pages do not moderate immediately 
-              after toggling settings, simply refresh the tab to initialize the target injection script.
-            </p>
-          </div>
         </section>
 
-        {/* Security Summary (Premium Dark Panel) */}
-        <section className="install-security-wrapper animate-fade-in-up delay-4">
-          <div className="install-security-glow" />
-          <div className="install-security-content">
-            <span className="install-security-icon">🛡️</span>
-            <h3>Privacy & Security Focused</h3>
-            <p>
-              ToxiGuard processes moderation decisions directly via API requests and never logs 
-              your social media passwords or session cookies. Analyzed text fragments are matched 
-              securely in memory and are never persisted on our hosting servers.
-            </p>
-          </div>
+        {/* Privacy & Architecture Card */}
+        <section className="install-note-card">
+          <h3 className="note-card-title">Privacy and Security Guarantees</h3>
+          <p className="note-card-text">
+            The extension analyzes comment DOM nodes via MutationObservers only while activated.
+            Account passwords, private direct messages, authentication cookies, and browsing histories
+            are never intercepted, read, or transmitted to moderation servers.
+          </p>
         </section>
+      </main>
 
-        {/* Navigation */}
-        <div className="install-navigation animate-fade-in-up delay-5">
-          <button className="back-home-btn" onClick={() => navigate("/")}>
-            ← Back to Home
-          </button>
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <span className="tg-logo-icon">◆</span>
+            <span>ToxiGuard AI</span>
+          </div>
+          <div className="footer-links">
+            <a href="/">Overview</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+          </div>
+          <div className="footer-copy">
+            © {new Date().getFullYear()} ToxiGuard AI. All rights reserved.
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
