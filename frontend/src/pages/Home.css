@@ -11,20 +11,203 @@
   flex-direction: column;
 }
 
-/* Category Pills (Design Specification standard) */
-.category-pill {
-  display: inline-block;
+/* =====================================================
+   FLOATING LIVE LOGO LOCKUP
+   ===================================================== */
+.hero-logo-float {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+  animation: heroLogoFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroLogoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+
+/* Orbit container — perfectly square so rings stay circular */
+.hero-logo-orbit {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+}
+
+/* Concentric orbit rings */
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--app-accent);
+  inset: 0;
+  opacity: 0;
+  animation: orbitExpand 3s ease-out infinite;
+}
+
+.orbit-ring-1 { animation-delay: 0s; }
+.orbit-ring-2 { animation-delay: 1.4s; }
+
+@keyframes orbitExpand {
+  0%   { transform: scale(0.6); opacity: 0.7; }
+  80%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Orbiting scanner dot that travels around the logo */
+.orbit-scanner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  box-shadow: 0 0 12px var(--app-accent), 0 0 24px var(--app-accent-soft);
+  top: 50%;
+  left: 50%;
+  transform-origin: -32px 0;
+  animation: scanOrbit 3.6s linear infinite;
+}
+
+@keyframes scanOrbit {
+  from { transform: rotate(0deg) translateX(36px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(36px) rotate(-360deg); }
+}
+
+/* Central logo disc */
+.hero-logo-core {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15) inset,
+    0 10px 40px var(--app-accent-soft),
+    0 4px 12px rgba(0,0,0,0.35);
+  z-index: 1;
+}
+
+/* Wordmark + status text group */
+.hero-logo-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-logo-wordmark {
   font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--app-ink);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1;
+}
+
+.hero-logo-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--app-accent);
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
+.hero-logo-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #10b981;
+}
+
+.hero-logo-sep {
+  color: var(--app-ink-subtle);
+  font-weight: 400;
+}
+
+.hero-logo-uptime {
+  color: var(--app-ink-muted);
+}
+
+.hero-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  flex-shrink: 0;
+  animation: heroDotBlink 1.8s ease-in-out infinite;
+}
+
+@keyframes heroDotBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* =====================================================
+   HERO BADGE BAR (pills row below the logo)
+   ===================================================== */
+.hero-badge-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+/* Category Pills */
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--app-accent);
   background: var(--app-accent-soft);
-  padding: 4px 10px;
+  padding: 5px 11px;
   border-radius: var(--radius-xs);
-  margin-bottom: 16px;
   width: fit-content;
+  margin: 0;
+}
+
+/* Safety Level Pill */
+.hero-safety-level-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--app-ink-muted);
+  background: var(--app-surface);
+  border: 1px solid var(--app-rule);
+  padding: 5px 11px;
+  border-radius: var(--radius-xs);
+}
+
+.hero-safety-level-pill svg {
+  stroke: #10b981;
+  flex-shrink: 0;
+}
+
+.hero-safety-level-pill strong {
+  color: var(--app-ink);
+  font-weight: 700;
 }
 
 /* Base Buttons */
@@ -91,7 +274,7 @@
    HERO SECTION
    ===================================================== */
 .hero-section {
-  padding: 80px 0 60px;
+  padding: 52px 0 60px;
   border-bottom: 1px solid var(--app-rule);
 }
 
@@ -112,14 +295,16 @@
 
 .hero-heading {
   font-family: var(--font-serif);
-  font-size: clamp(2.3rem, 3.8vw, 3.4rem);
-  line-height: 1.12;
-  letter-spacing: -0.028em;
+  font-size: clamp(1.85rem, 2.75vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: var(--app-ink);
   margin: 0 0 20px;
-  text-wrap: balance;
-  hyphens: manual;
-  word-break: keep-all;
+}
+
+.hero-heading-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .hero-lead {
@@ -651,6 +836,14 @@
 @media (max-width: 600px) {
   .hero-section {
     padding: 50px 0 40px;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.6rem, 6.5vw, 2rem);
+  }
+
+  .hero-heading-line {
+    white-space: normal;
   }
 
   .hero-action-group,

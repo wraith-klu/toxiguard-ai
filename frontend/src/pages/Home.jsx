@@ -167,11 +167,58 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-container">
           <div className="hero-copy-column">
-            <span className="category-pill">Production Safety Engine</span>
+            {/* Floating Live Logo Lockup */}
+            <div className="hero-logo-float">
+              <div className="hero-logo-orbit" aria-hidden="true">
+                {/* Outer orbit ring */}
+                <span className="orbit-ring orbit-ring-1"></span>
+                <span className="orbit-ring orbit-ring-2"></span>
+                {/* Orbiting scan dot */}
+                <span className="orbit-scanner"></span>
+                {/* Central shield */}
+                <div className="hero-logo-core">
+                  <svg
+                    width="36"
+                    height="36"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" strokeWidth="2.1" />
+                  </svg>
+                </div>
+              </div>
+              <div className="hero-logo-text-group">
+                <div className="hero-logo-wordmark">
+                  ToxiGuard <span className="hero-logo-tag">AI</span>
+                </div>
+                <div className="hero-logo-status">
+                  <span className="hero-live-dot"></span>
+                  <span>Live Engine Active</span>
+                  <span className="hero-logo-sep">/</span>
+                  <span className="hero-logo-uptime">99.8% uptime</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Safety Level Badge Row */}
+            <div className="hero-badge-bar">
+              <span className="category-pill">Production Safety Engine</span>
+              <span className="hero-safety-level-pill">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Safety Level: <strong>Tier 1 Enterprise</strong>
+              </span>
+            </div>
 
             <h1 className="hero-heading">
-              Hybrid content moderation<br />
-              engineered for real&#8209;time applications.
+              <span className="hero-heading-line">Hybrid content moderation</span>
+              <span className="hero-heading-line">engineered for real&#8209;time applications.</span>
             </h1>
 
             <p className="hero-lead">
