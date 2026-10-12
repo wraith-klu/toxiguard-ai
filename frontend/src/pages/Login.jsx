@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "../components/Toast";
-import ParticleBackground from "../components/ParticleBackground";
 import "./Login.css";
 
 const API = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
@@ -38,7 +37,7 @@ export default function Login() {
         localStorage.setItem("user_email", email);
         if (data.token) localStorage.setItem("token", data.token);
 
-        toast.success("Welcome back!");
+        toast.success("Welcome back");
         navigate("/dashboard");
       } else {
         toast.error(data.detail || "Invalid credentials");
@@ -53,57 +52,69 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <ParticleBackground />
       <div className="auth-container">
         {/* Left Form */}
         <div className="auth-card">
-          <div className="auth-brand">
+          <Link to="/" className="auth-brand">
             <span className="auth-brand-icon">◆</span>
             <span className="auth-brand-text">ToxiGuard AI</span>
-          </div>
+          </Link>
 
-          <h2>Welcome back</h2>
+          <h2>Sign In</h2>
+          <p className="auth-subtitle">Access your moderation credentials and dashboard</p>
 
           <form onSubmit={handleLogin} className="auth-form">
-            <input
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-            />
+            <div className="form-group">
+              <label htmlFor="login-email">Email Address</label>
+              <input
+                id="login-email"
+                type="email"
+                placeholder="operator@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
+            <div className="form-group">
+              <label htmlFor="login-password">Password</label>
+              <input
+                id="login-password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </div>
 
             <button type="submit" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Authenticating..." : "Sign In to Dashboard"}
             </button>
           </form>
 
           <p className="auth-alt">
-            Don't have an account?{" "}
+            Need an account?{" "}
             <Link to="/signup" className="auth-link">
-              Create one
+              Create an account
             </Link>
           </p>
 
           <button
+            type="button"
             className="back-home-btn"
             onClick={() => navigate("/")}
           >
-            ← Back to Home
+            ← Back to Overview
           </button>
         </div>
 
-        {/* Right Image */}
+        {/* Right Media Panel */}
         <div className="auth-right">
           <video
+            className="auth-media-video"
             src="/auth-bg.mp4"
             poster="/auth-bg.jpg"
             autoPlay
@@ -111,6 +122,15 @@ export default function Login() {
             muted
             playsInline
           />
+          <div className="auth-right-overlay">
+            <div className="auth-quote-block">
+              <span className="auth-quote-tag">Deterministic Moderation</span>
+              <p className="auth-quote-text">
+                "Zero data retention pipelines for real-time community safety."
+              </p>
+              <span className="auth-quote-author">ToxiGuard Core v3.2</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

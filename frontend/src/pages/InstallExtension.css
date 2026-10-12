@@ -1,425 +1,188 @@
 /* ============================================================
-   ToxiGuard AI — Premium Install Page Styles (Blended Theme)
+   ToxiGuard AI — Extension Installation Page Styles
+   "Editorial Craftsmanship meets Silicon Precision"
    ============================================================ */
 
 .install-page {
   min-height: 100vh;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-body);
+  background: var(--app-bg);
+  color: var(--app-ink);
+  font-family: var(--font-sans);
   display: flex;
   flex-direction: column;
 }
 
-/* ─── Hero Section (Dark Theme) ─────────────────────────── */
-.install-hero-wrapper {
-  background: #030712;
-  position: relative;
-  overflow: hidden;
-  padding: 100px 24px 80px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.install-hero-glow {
-  position: absolute;
-  top: -150px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 100%);
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.install-hero-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-  background-size: 24px 24px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
-  pointer-events: none;
-}
-
-.install-hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.install-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  color: #818cf8;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 24px;
-}
-
-.install-hero-content h1 {
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.15;
-  letter-spacing: -1px;
-  margin-bottom: 18px;
-}
-
-.install-hero-gradient {
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.install-hero-content p {
-  font-size: 1.15rem;
-  color: #94a3b8;
-  max-width: 580px;
-  margin: 0 auto 36px;
-  line-height: 1.6;
-}
-
-.install-download-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 36px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #6366f1, #06b6d4);
-  color: #ffffff;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  box-shadow: var(--neo-btn-shadow), 0 10px 30px rgba(99, 102, 241, 0.2);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.install-download-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--neo-btn-shadow-hover), 0 15px 40px rgba(6, 182, 212, 0.35);
-  color: #ffffff;
-}
-
-.install-download-btn:active {
-  transform: translateY(0);
-  box-shadow: var(--neo-inset);
-}
-
-.install-download-btn span {
-  font-size: 1.1rem;
-  transition: transform 0.2s ease;
-}
-
-.install-download-btn:hover span {
-  transform: translateX(4px);
-}
-
-.install-note {
-  margin-top: 18px;
-  font-size: 0.85rem;
-  color: #64748b;
-}
-
-/* ─── Main Content (Blended Light Theme) ─────────────────── */
 .install-main-container {
-  max-width: 1000px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 60px 24px 100px;
+  padding: 60px max(1.25rem, 4vw) 80px;
+  width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 60px;
-  z-index: 10;
+  gap: 56px;
 }
 
-.install-section {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+/* Header */
+.install-header {
+  border-bottom: 1px solid var(--app-rule);
+  padding-bottom: 36px;
 }
 
-.install-section-header {
-  text-align: center;
+.install-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--app-ink);
+  margin: 0 0 16px;
 }
 
-.install-section-header h2 {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.5px;
-  margin-bottom: 8px;
-}
-
-.install-section-header p {
-  color: var(--text-tertiary);
-  font-size: 0.95rem;
-}
-
-/* Grid of steps */
-.install-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.install-step-card {
-  background: var(--bg-card);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--surface-glass-border);
-  border-radius: var(--radius-lg);
-  padding: 30px 26px;
-  box-shadow: var(--neo-outset);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-  overflow: hidden;
-}
-
-.install-step-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, transparent);
-  transition: background 0.3s ease;
-}
-
-.install-step-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--neo-outset), var(--shadow-glow-blue);
-  border-color: rgba(99, 102, 241, 0.25);
-}
-
-.install-step-card:hover::before {
-  background: linear-gradient(90deg, #6366f1, #06b6d4);
-}
-
-.install-step-num-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  color: #4f46e5;
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-}
-
-.install-step-card p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+.install-lead {
+  font-size: 1.05rem;
   line-height: 1.6;
+  color: var(--app-ink-muted);
+  margin: 0 0 28px;
+  max-width: 680px;
 }
 
-.install-step-card a {
-  color: #4f46e5;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.install-step-card a:hover {
-  color: #06b6d4;
-}
-
-.install-tip-box {
-  background: rgba(245, 158, 11, 0.05);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  border-radius: var(--radius-md);
-  padding: 16px 24px;
-  color: #b45309;
-  font-size: 0.9rem;
+.install-cta-group {
   display: flex;
   align-items: center;
   gap: 12px;
-  max-width: 720px;
-  margin: 10px auto 0;
-}
-
-.install-tip-icon {
-  font-size: 1.3rem;
-}
-
-/* ─── Security section (Dark Card) ─────────────────────── */
-.install-security-wrapper {
-  background: var(--bg-card);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  border: 1px solid var(--surface-glass-border);
-  border-radius: var(--radius-xl);
-  padding: 40px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--neo-outset);
-}
-
-.install-security-glow {
-  position: absolute;
-  bottom: -50px;
-  right: -50px;
-  width: 250px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.install-security-content {
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.install-security-icon {
-  font-size: 2.2rem;
+  flex-wrap: wrap;
   margin-bottom: 16px;
-  display: inline-block;
 }
 
-.install-security-content h3 {
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 12px;
+.install-compatibility {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--app-ink-subtle);
+  margin: 0;
 }
 
-.install-security-content p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-/* ─── Navigation Buttons ────────────────────────────── */
-.install-navigation {
+/* Sections */
+.install-section {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.back-home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid var(--surface-glass-border);
-  color: var(--text-secondary);
-  font-family: var(--font-heading);
-  font-weight: 700;
+.section-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.install-section-title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--app-ink);
+  margin: 0;
+}
+
+.install-section-desc {
   font-size: 0.9rem;
-  cursor: pointer;
-  box-shadow: var(--neo-btn-shadow);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  transition: all 0.2s ease;
-  text-decoration: none;
+  color: var(--app-ink-subtle);
+  margin: 0;
 }
 
-.back-home-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
-  border-color: rgba(56, 189, 248, 0.4);
-  color: var(--text-primary);
-  box-shadow: var(--neo-btn-shadow-hover);
+.install-step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.back-home-btn:active {
-  box-shadow: var(--neo-inset);
+.install-step-row {
+  background: var(--app-surface);
+  border: 1px solid var(--app-rule);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-/* ─── Responsive Styles ─────────────────────────────────── */
-@media (max-width: 768px) {
-  .install-hero-wrapper {
-    padding: 80px 20px 60px;
+.step-counter {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--app-accent);
+  background: var(--app-accent-soft);
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 0.925rem;
+  line-height: 1.55;
+  color: var(--app-ink-muted);
+}
+
+.step-content a {
+  color: var(--app-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.step-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--app-bg);
+  border: 1px solid var(--app-rule);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--app-ink);
+}
+
+.step-content strong {
+  color: var(--app-ink);
+}
+
+/* Note Card */
+.install-note-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-rule);
+  border-radius: var(--radius-md);
+  padding: 28px 32px;
+  box-shadow: var(--app-shadow-lg);
+}
+
+.note-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--app-ink);
+  margin: 0 0 10px;
+  letter-spacing: -0.015em;
+}
+
+.note-card-text {
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: var(--app-ink-muted);
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .install-cta-group {
+    flex-direction: column;
+    width: 100%;
   }
 
-  .install-main-container {
-    padding: 40px 16px 60px;
-    gap: 40px;
+  .install-cta-group .btn-primary,
+  .install-cta-group .btn-secondary {
+    width: 100%;
   }
-
-  .install-security-wrapper {
-    padding: 30px 20px;
-  }
-}
-
-/* ============================================================
-   DARK MODE OVERRIDES — Install Page
-   ============================================================ */
-[data-theme="dark"] .install-step-card {
-  background: linear-gradient(145deg, #0b1020, #060a15);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    6px 6px 18px rgba(0, 0, 0, 0.6),
-    -2px -2px 8px rgba(255, 255, 255, 0.02),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-[data-theme="dark"] .install-step-num-badge {
-  background: linear-gradient(135deg, rgba(129, 140, 248, 0.15), rgba(34, 211, 238, 0.1));
-  border: 1px solid rgba(129, 140, 248, 0.25);
-  color: #a5b4fc;
-  box-shadow: 0 0 12px rgba(129, 140, 248, 0.12);
-}
-
-[data-theme="dark"] .install-step-card a {
-  color: #a5b4fc;
-}
-[data-theme="dark"] .install-step-card a:hover {
-  color: #22d3ee;
-}
-
-[data-theme="dark"] .install-tip-box {
-  background: rgba(251, 191, 36, 0.06);
-  border: 1px solid rgba(251, 191, 36, 0.2);
-  color: #fcd34d;
-}
-
-[data-theme="dark"] .install-security-wrapper {
-  background: linear-gradient(145deg, #0b1428, #060a15);
-  border: 1px solid rgba(52, 211, 153, 0.18);
-  box-shadow:
-    8px 10px 30px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 0 60px rgba(16, 185, 129, 0.06);
-}
-
-[data-theme="dark"] .back-home-btn {
-  background: rgba(129, 140, 248, 0.08);
-  border: 1px solid rgba(129, 140, 248, 0.2);
-  color: #a5b4fc;
-}
-[data-theme="dark"] .back-home-btn:hover {
-  background: rgba(129, 140, 248, 0.15);
-  border-color: rgba(129, 140, 248, 0.4);
-  color: #ffffff;
-  box-shadow: var(--neo-btn-shadow-hover), 0 0 20px rgba(129, 140, 248, 0.15);
 }
