@@ -170,16 +170,20 @@ export default function Home() {
             {/* Floating Live Logo Lockup */}
             <div className="hero-logo-float">
               <div className="hero-logo-orbit" aria-hidden="true">
-                {/* Outer orbit ring */}
+                {/* Soft glow halo behind everything */}
+                <span className="orbit-halo"></span>
+                {/* Expanding orbit rings */}
                 <span className="orbit-ring orbit-ring-1"></span>
                 <span className="orbit-ring orbit-ring-2"></span>
-                {/* Orbiting scan dot */}
+                {/* Primary orbiting dot */}
                 <span className="orbit-scanner"></span>
-                {/* Central shield */}
+                {/* Secondary counter-orbiting sparkle */}
+                <span className="orbit-scanner orbit-scanner-2"></span>
+                {/* Central shield disc */}
                 <div className="hero-logo-core">
                   <svg
-                    width="36"
-                    height="36"
+                    width="34"
+                    height="34"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -192,14 +196,16 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
+
               <div className="hero-logo-text-group">
                 <div className="hero-logo-wordmark">
-                  ToxiGuard <span className="hero-logo-tag">AI</span>
+                  <span className="hero-logo-name">ToxiGuard</span>
+                  <span className="hero-logo-tag">AI</span>
                 </div>
                 <div className="hero-logo-status">
                   <span className="hero-live-dot"></span>
                   <span>Live Engine Active</span>
-                  <span className="hero-logo-sep">/</span>
+                  <span className="hero-logo-sep">&middot;</span>
                   <span className="hero-logo-uptime">99.8% uptime</span>
                 </div>
               </div>
