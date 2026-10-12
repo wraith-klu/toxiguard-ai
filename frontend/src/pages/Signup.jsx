@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "../components/Toast";
-import ParticleBackground from "../components/ParticleBackground";
 import "./Signup.css";
 
 const API = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
@@ -41,7 +40,7 @@ export default function Signup() {
       if (res.ok && data.api_key) {
         localStorage.setItem("api_key", data.api_key);
         localStorage.setItem("user_email", email);
-        toast.success("Account created! Welcome to ToxiGuard.");
+        toast.success("Account created successfully");
         navigate("/dashboard");
       } else {
         toast.error(data.detail || "Signup failed");
@@ -56,58 +55,85 @@ export default function Signup() {
 
   return (
     <div className="auth-page">
-      <ParticleBackground />
       <div className="auth-container">
         {/* Left Form */}
         <div className="auth-card">
-          <div className="auth-brand">
+          <Link to="/" className="auth-brand">
             <span className="auth-brand-icon">◆</span>
             <span className="auth-brand-text">ToxiGuard AI</span>
-          </div>
+          </Link>
 
-          <h2>Create account</h2>
+          <h2>Create Account</h2>
+          <p className="auth-subtitle">Generate API keys and configure custom moderation rules</p>
 
           <form onSubmit={handleSignup} className="auth-form">
-        
-            <input
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-            />
+            <div className="form-group">
+              <label htmlFor="signup-email">Work Email</label>
+              <input
+                id="signup-email"
+                type="email"
+                placeholder="developer@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              placeholder="Password (min 6 characters)"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"
-            />
+            <div className="form-group">
+              <label htmlFor="signup-password">Password (Minimum 6 characters)</label>
+              <input
+                id="signup-password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
+                required
+              />
+            </div>
 
             <button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Account"}
+              {loading ? "Creating Account..." : "Create Free Account"}
             </button>
           </form>
 
           <p className="auth-alt">
-            Already have an account?{" "}
+            Already registered?{" "}
             <Link to="/login" className="auth-link">
               Sign in
             </Link>
           </p>
 
           <button
+            type="button"
             className="back-home-btn"
             onClick={() => navigate("/")}
           >
-            ← Back to Home
+            ← Back to Overview
           </button>
         </div>
 
-        {/* Right Image */}
+        {/* Right Media Panel */}
         <div className="auth-right">
-          <img src="/toxi2.jpg" alt="ToxiGuard AI" />
+          <video
+            className="auth-media-video"
+            src="/auth-bg.mp4"
+            poster="/auth-bg.jpg"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          <div className="auth-right-overlay">
+            <div className="auth-quote-block">
+              <span className="auth-quote-tag">Production Ready</span>
+              <p className="auth-quote-text">
+                "Multi-layer NLP architecture built for sub-50ms inference at the edge."
+              </p>
+              <span className="auth-quote-author">DeBERTa-v3 & ONNX Runtime</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

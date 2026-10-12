@@ -1,10 +1,8 @@
-<div align="center">
+# 🛡️ ToxiGuard AI `v4.2.0`
 
-<img src="toxiguard_architecture.png" alt="ToxiGuard AI Architecture" width="850"/>
+![ToxiGuard AI Architecture](toxiguard_architecture.png)
 
-# 🛡️ ToxiGuard AI `v4.0.0`
-
-**Enterprise-Grade, Autonomous AI Content Safety, Threat Detection & Real-Time Moderation Platform**
+Enterprise-Grade, Autonomous AI Content Safety, Threat Detection & Real-Time Moderation Platform
 
 [![Live Web Application](https://img.shields.io/badge/Frontend-toxiai.vercel.app-6366f1?style=for-the-badge&logo=vercel)](https://toxiai.vercel.app)
 [![FastAPI Backend](https://img.shields.io/badge/Backend_API-Render-0ea5e9?style=for-the-badge&logo=render)](https://toxiguard-ai-agent-1.onrender.com/)
@@ -14,75 +12,101 @@
 [![React 18](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-a78bfa?style=for-the-badge)](LICENSE)
 
+## Platform Highlights
 
-### *Real-Time Content Shielding • 3-Layer Hybrid AI Architecture • Token Heatmap Explainability (XAI) • Continuous Drift Monitoring • Universal Chrome Extension*
+Real-Time Content Shielding • 3-Layer Hybrid AI Architecture • Token Heatmap Explainability (XAI) • Continuous Drift Monitoring • Universal Chrome Extension • Editorial Design System
 
-</div>
-
+---
 
 ## 📌 Table of Contents
 
-- [📖 Executive Summary \& Problem Statement](#-executive-summary--problem-statement)
-- [🎯 Core Philosophy \& Architectural Principles](#-core-philosophy--architectural-principles)
+- [📖 Executive Summary & Problem Statement](#-executive-summary--problem-statement)
+- [🎯 Core Philosophy & Architectural Principles](#-core-philosophy--architectural-principles)
+- [🎨 Editorial Design System & Modern Frontend](#-editorial-design-system--modern-frontend)
 - [🧠 3-Layer Cascaded Hybrid AI Pipeline](#-3-layer-cascaded-hybrid-ai-pipeline)
 - [💡 Deep-Dive Platform Features](#-deep-dive-platform-features)
   - [1. 3-Layer Hybrid Moderation Engine](#1-3-layer-hybrid-moderation-engine)
-  - [2. Explainable AI (XAI) \& Token Impact Heatmaps](#2-explainable-ai-xai--token-impact-heatmaps)
+  - [2. Explainable AI (XAI) & Token Impact Heatmaps](#2-explainable-ai-xai--token-impact-heatmaps)
   - [3. High-Throughput Real-Time Stream Moderation](#3-high-throughput-real-time-stream-moderation)
-  - [4. Automated Feedback Loop \& Concept Drift Monitoring](#4-automated-feedback-loop--concept-drift-monitoring)
+  - [4. Automated Feedback Loop & Concept Drift Monitoring](#4-automated-feedback-loop--concept-drift-monitoring)
   - [5. Universal Chrome Extension (Manifest V3)](#5-universal-chrome-extension-manifest-v3)
-  - [6. React SaaS Analytics Dashboard](#6-react-saas-analytics-dashboard)
-- [⚙️ Technology Stack \& "Why We Chose It"](#️-technology-stack--why-we-chose-it)
-  - [🐍 Backend Stack](#-backend-stack)
-  - [🌐 Frontend Stack](#-frontend-stack)
-  - [🧠 AI / ML Stack](#-ai--ml-stack)
-  - [🔌 Chrome Extension Stack](#-chrome-extension-stack)
-- [🔄 End-to-End Execution Workflow \& Data Lifecycle](#-end-to-end-execution-workflow--data-lifecycle)
+  - [6. React SaaS Analytics Dashboard & Product Simulator](#6-react-saas-analytics-dashboard--product-simulator)
+  - [7. Production Legal & Compliance Suite](#7-production-legal--compliance-suite)
+- [⚙️ Technology Stack & "Why We Chose It"](#️-technology-stack--why-we-chose-it)
+  - [Backend Stack](#backend-stack)
+  - [Frontend Stack](#frontend-stack)
+  - [AI / ML Stack](#ai--ml-stack)
+  - [Chrome Extension Stack](#chrome-extension-stack)
+- [🔄 End-to-End Execution Workflow & Data Lifecycle](#-end-to-end-execution-workflow--data-lifecycle)
 - [🏗️ Complete Project Directory Structure](#️-complete-project-directory-structure)
 - [🔗 Comprehensive API Reference](#-comprehensive-api-reference)
   - [Authentication Endpoints](#authentication-endpoints)
-  - [Moderation \& Analysis Endpoints](#moderation--analysis-endpoints)
-  - [Explainability, Stream \& Monitoring Endpoints](#explainability-stream--monitoring-endpoints)
-- [🚀 Quick Start \& Local Setup Guide](#-quick-start--local-setup-guide)
+  - [Moderation & Analysis Endpoints](#moderation--analysis-endpoints)
+  - [Explainability, Stream & Monitoring Endpoints](#explainability-stream--monitoring-endpoints)
+- [🚀 Quick Start & Local Setup Guide](#-quick-start--local-setup-guide)
   - [Option 1: Docker (Full Stack)](#option-1-docker-full-stack)
   - [Option 2: Local Backend Setup](#option-2-local-backend-setup)
   - [Option 3: Local Frontend Setup](#option-3-local-frontend-setup)
   - [Option 4: Chrome Extension Load](#option-4-chrome-extension-load)
-- [🔒 Security, Rate Limiting \& Compliance](#-security-rate-limiting--compliance)
-- [✅ Final System Verification \& Audit Checklist](#-final-system-verification--audit-checklist)
-- [👨‍💻 Author \& License](#-author--license)
+- [🔒 Security, Privacy & Zero-Retention Compliance](#-security-privacy--zero-retention-compliance)
+- [✅ Final System Verification & Audit Checklist](#-final-system-verification--audit-checklist)
+- [👨‍💻 Author & License](#-author--license)
 
+---
 
 ## 📖 Executive Summary & Problem Statement
 
-Modern digital communications on social media platforms, live streams, comments sections, and enterprise communication channels generate **billions of user posts every single day**. However, online toxicity, hate speech, cyberbullying, harassment, and severe abusive threats pose a constant danger to user mental health, brand equity, and platform compliance.
+Modern digital communications on social media platforms, live streams, comments sections, and enterprise channels generate **billions of user posts every single day**. However, online toxicity, hate speech, cyberbullying, harassment, and abusive threats pose a constant danger to user safety, mental health, brand equity, and platform compliance.
 
 Traditional moderation approaches fail at scale:
-* ❌ **Rule-Based Filters & Dictionaries** are blazingly fast but naive—failing on obfuscated words (e.g. `k!ll`, `sh!t`), sarcasm, context-dependent phrasing, or evolving internet slang.
-* ❌ **Standalone Heavy LLMs (GPT-4 / Claude)** provide deep contextual reasoning but are far too slow (~1–3 seconds per request) and prohibitively expensive ($0.01+ per call) to run on every single comment in a high-volume social feed.
-* ❌ **Black-Box ML Classifiers** provide fast probability scores, but fail to provide *explainability* (why a post was flagged) or adapt when language patterns shift over time (model drift).
 
-### The Solution: ToxiGuard AI v4.0
+- ❌ **Rule-Based Filters & Dictionaries** are fast but naive, failing on obfuscated words (e.g. `k!ll`, `sh!t`), sarcasm, context-dependent phrasing, or evolving internet slang.
+- ❌ **Standalone Heavy LLMs (GPT-4 / Claude)** provide deep contextual reasoning but are far too slow (~1–3 seconds per request) and prohibitively expensive ($0.01+ per call) to run on every single comment in a high-volume social feed.
+- ❌ **Black-Box ML Classifiers** provide fast probability scores, but fail to provide *explainability* (why a post was flagged) or adapt when language patterns shift over time (model drift).
 
-**ToxiGuard AI** solves this trilemma with an **Enterprise-Grade Cascaded Architecture**. It merges **sub-millisecond Regex rule processing**, **20ms ML feature classification**, and **sub-second Large Language Model (LLM) contextual reasoning** into a single self-calibrating pipeline. Paired with a client-side **Chrome Extension**, a real-time **React SaaS Dashboard**, and **Explainable AI (XAI)** token heatmaps, ToxiGuard provides instant safety without compromising performance or privacy.
+### The Solution: ToxiGuard AI v4.2
 
+**ToxiGuard AI** solves this trilemma with an **Enterprise-Grade Cascaded Architecture**. It merges **sub-millisecond Regex rule processing**, **20ms ML feature classification**, and **sub-second Large Language Model (LLM) contextual reasoning** into a single self-calibrating pipeline. Paired with an unpacked **Chrome Extension**, a real-time **React SaaS Dashboard**, and **Explainable AI (XAI)** token heatmaps, ToxiGuard provides instant safety without compromising performance or privacy.
+
+---
 
 ## 🎯 Core Philosophy & Architectural Principles
 
-ToxiGuard AI is built around 5 fundamental design pillars:
+ToxiGuard AI is built around 6 fundamental design pillars:
 
 1. **Defence-in-Depth (Cascaded Fallback)**: Never rely on a single model. If a text string is an obvious slur, resolve it in **<1ms** via Layer 1. If it requires classification, evaluate via Layer 2 in **~20ms**. Reserve deep LLM inference (Layer 3) only for complex or low-confidence edge cases.
 2. **Sub-Second Real-Time Performance**: High throughput is non-negotiable. Live stream chat buffers and social media scroll hooks require instant response times to prevent abusive text from ever rendering on screen.
 3. **Explainability First (XAI)**: Machine learning models should not be opaque black boxes. ToxiGuard extracts and visualizes exact token impact weights (SHAP/LIME attribution) so moderators and users understand precisely *which words* triggered a flag.
 4. **Self-Correcting & Drift-Resilient**: Modern internet speech evolves rapidly. ToxiGuard includes continuous model drift tracking, confidence calibration, automated user feedback collection, and auto-retraining loops.
 5. **Universal Client-Side Enforcement**: Protect users anywhere on the open web through a Manifest V3 extension featuring feed mutation observers, shadow DOM injection, floating context selection buttons, and side-panel companion controls.
+6. **Zero-Retention Privacy by Design**: Moderation payloads are evaluated in volatile RAM and immediately discarded. No customer input strings are stored on disk or used to retrain public neural models.
 
+---
+
+## 🎨 Editorial Design System & Modern Frontend
+
+The web interface is built to reflect **Editorial Craftsmanship meets Silicon Precision** (inspired by Stripe Press, Linear, and luxury print editorial layouts).
+
+- **Design Tokens & Theme System**:
+  - **Dark Mode**: Obsidian Midnight canvas (`#080c16`), elevated card surfaces (`#111726`), warm terracotta amber accent (`#e07a38`), and hairline dividers (`rgba(255, 255, 255, 0.09)`).
+  - **Light Mode**: Tactile Japanese linen canvas (`#F4EFE8`), soft sandstone card surfaces (`#EDE7DF`), and WCAG AA-compliant terracotta brick accent (`#A35320`).
+  - Seamless theme toggling via a dedicated 36×36px square switcher with custom inline SVGs.
+- **Typography Hierarchy**:
+  - **Display Serif**: `DM Serif Display` for hero headlines, major section headings, and brand wordmarks.
+  - **Body Sans**: `DM Sans` for UI controls, inputs, body text, and navigation.
+  - **Monospace**: `JetBrains Mono` for code snippets, telemetry counters, and technical pills.
+- **Product-Focused Landing Experience**:
+  - Working moderation feed simulator with an interactive text tester and live masking toggle.
+  - Multi-language developer integration cards featuring **JavaScript**, **Python**, and **cURL** with dedicated syntax highlighting.
+  - Technical FAQ accordion addressing pipeline latency, in-memory processing, and extension mechanics.
+
+---
 
 ## 🧠 3-Layer Cascaded Hybrid AI Pipeline
 
 The backbone of ToxiGuard AI is its 3-layer cascaded decision matrix. Text enters at the top and cascades downwards; early exit pathways ensure maximum throughput and minimum compute expenditure.
 
-```
+```text
                       ┌─────────────────────────────────────────┐
                       │            Incoming Raw Text            │
                       └────────────────────┬────────────────────┘
@@ -98,123 +122,105 @@ The backbone of ToxiGuard AI is its 3-layer cascaded decision matrix. Text enter
                                            ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │ LAYER 1: Rule Engine & Keyword Dictionary (< 1ms Latency)                            │
-│ • Fast Regex dictionary lookup for explicit slurs, severe threats, & illegal content │
-│ • High-precision hard matching                                                      │
-└──────────────────────────────────────────┬──────────────────────────────────────────┘
-                                           │
-                        ┌──────────────────┴──────────────────┐
-                        │  Matched Explicit Violation?        │
-                        └─────────┬───────────────────┬───────┘
-                                  │ YES               │ NO
-                                  ▼                   ▼
-                     [ Return Layer 1 Result ]    ┌──────────────────────────────────────────┐
-                                                  │ LAYER 2: Machine Learning Classifier    │
-                                                  │ (~20ms Latency)                          │
-                                                  │ • TF-IDF + Logistic Regression           │
-                                                  │ • Optional: ONNX DeBERTa Transformer     │
-                                                  │ • Calculates toxicity probability p      │
-                                                  └────────────────────┬─────────────────────┘
-                                                                       │
-                                              ┌────────────────────────┴─────────────────────┐
-                                              │ Is Confidence High? (p > 0.85 or p < 0.15)   │
-                                              └──────────┬───────────────────────────┬───────┘
-                                                         │ YES                       │ NO (Borderline / Ambiguous)
-                                                         ▼                           ▼
-                                            [ Return Layer 2 Result ]   ┌──────────────────────────────────────────┐
-                                                                        │ LAYER 3: Deep LLM Reasoning Engine       │
-                                                                        │ (~600ms Latency)                         │
-                                                                        │ • Primary:  Google Gemma 4 31B           │
-                                                                        │ • Fallback: Qwen3 Next 80B Instruct      │
-                                                                        │ • Evaluates sarcasm, intent, & context   │
-                                                                        │ • Generates XAI natural language summary │
-                                                                        └────────────────────┬─────────────────────┘
-                                                                                             │
-                                                                                             ▼
-                                                                                ┌──────────────────────────┐
-                                                                                │ Ensemble Voting Engine   │
-                                                                                │ Merges Layer 1, 2, & 3   │
-                                                                                │ Weights & Confidence     │
-                                                                                └────────────┬─────────────┘
-                                                                                             │
-                                                                                             ▼
-                                                                                [ Final JSON Response ]
+│ • Deterministic Regex matching against abuse words, identity attacks, and slurs     │
+│ • High-confidence early exit for obvious violations                                │
+└──────────────────────────────────┬──────────────────────────────────────────────────┘
+                                   │ Ambiguous or clean
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ LAYER 2: Transformer ML Classifier (~20–35ms Latency)                               │
+│ • Fine-tuned DeBERTa-v3 model compiled to ONNX Runtime / TF-IDF Logistic Regression   │
+│ • Calibrated multi-label toxicity probability distribution                         │
+└──────────────────────────────────┬──────────────────────────────────────────────────┘
+                                   │ Low confidence boundary (0.15 <= p <= 0.85)
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ LAYER 3: Contextual LLM Verification (~400–600ms Latency)                           │
+│ • Targeted contextual reasoning via Gemma 4 31B / Qwen3 80B Instruct                 │
+│ • Analyzes conversational nuance, sarcasm, and regional context                      │
+└──────────────────────────────────┬──────────────────────────────────────────────────┘
+                                   │
+                                   ▼
+                      ┌─────────────────────────────────────────┐
+                      │    Ensemble Calibrated Output Verdict   │
+                      │   is_toxic • confidence • category tags │
+                      └─────────────────────────────────────────┘
 ```
 
+---
 
 ## 💡 Deep-Dive Platform Features
 
 ### 1. 3-Layer Hybrid Moderation Engine
-* **Layer 1 (Rule Engine)**: Built in `backend/utils/abuse_words.py`. Features regex string normalizers, leetspeak decoding (`a` $\rightarrow$ `@`, `i` $\rightarrow$ `!`, `e` $\rightarrow$ `3`), and dictionary lookup. Evaluates in **< 1ms**.
-* **Layer 2 (Machine Learning Model)**: Implemented in `backend/app/services/model_service.py` & `backend/ml/inference.py`. Uses trained scikit-learn TF-IDF pipelines with calibrated Logistic Regression or ONNX Runtime DeBERTa models for sub-20ms probabilistic scoring.
-* **Layer 3 (Large Language Model & OpenRouter API)**: Managed in `backend/utils/llm_guard.py`. Connects via OpenRouter to **Google Gemma 4 31B** (Primary) with automatic zero-downtime fallback to **Qwen3 Next 80B Instruct**. Resolves sarcasm, implicit micro-aggressions, and complex cultural slang, returning a structured JSON explanation.
+
+- **Backend Endpoint**: `/predict` & `/predict/ml`.
+- Combines deterministic rules, neural feature embeddings, and contextual LLM verification into a unified weighted ensemble.
 
 ### 2. Explainable AI (XAI) & Token Impact Heatmaps
-* **Backend Endpoint**: `/explain` powered by `backend/ml/explainability.py`.
-* **Frontend Component**: `TokenHeatmap.jsx`.
-* **How it Works**: Calculates gradient feature attribution (SHAP/LIME approximation) for each individual word in the input text. Generates normalized weights from `-1.0` (strongly safe/positive) to `+1.0` (strongly toxic/abusive).
-* **UI Visualization**: Renders interactive inline text heatmaps where toxic words highlight in vivid crimson red and safe context words highlight in emerald green, displaying exact percentage influence on hover.
+
+- **Backend Endpoint**: `/explain` powered by `backend/ml/explainability.py`.
+- **Frontend Component**: `TokenHeatmap.jsx`.
+- Calculates token attribution weights for each individual word in the input text, generating normalized weights from `-1.0` (strongly safe) to `+1.0` (strongly toxic).
 
 ### 3. High-Throughput Real-Time Stream Moderation
-* **Backend Endpoint**: `/stream` powered by `backend/app/routes/stream.py`.
-* **Frontend Component**: `StreamAnalyzer.jsx`.
-* **How it Works**: Designed for Twitch, YouTube Live, Discord, and internal chat feeds. Processes multi-message arrays or live WebSocket payloads in parallel. Returns throughput stats (messages/second), average latency, overall channel toxicity sentiment, and flagged comment indices.
+
+- **Backend Endpoint**: `/stream` powered by `backend/app/routes/stream.py`.
+- **Frontend Component**: `StreamAnalyzer.jsx`.
+- Processes multi-message arrays or live WebSocket payloads in parallel for streaming platforms and chat systems.
 
 ### 4. Automated Feedback Loop & Concept Drift Monitoring
-* **Backend Endpoint**: `/feedback`, `/monitoring` powered by `backend/app/services/drift_monitor.py` & `calibration.py`.
-* **Frontend Component**: `FeedbackWidget.jsx` & `MonitoringDashboard.jsx`.
-* **How it Works**:
-  1. Users can report false positives or missed toxic comments directly from the dashboard or extension.
-  2. Reports update the SQLite/PostgreSQL feedback table and trigger continuous concept drift calculations (tracking changes in prediction distribution over time).
-  3. When drift metrics exceed preset thresholds, `backend/app/services/retrainer.py` triggers an automated retraining job to update the ML model weights.
+
+- **Backend Endpoints**: `/feedback`, `/monitoring` powered by `drift_monitor.py` & `calibration.py`.
+- Collects user reports on false positives, evaluates distribution drift over time, and triggers automated retraining when drift exceeds thresholds.
 
 ### 5. Universal Chrome Extension (Manifest V3)
-* **Directory**: `extension/`.
-* **Features**:
-  * **MutationObserver Feed Scanner**: Watches DOM additions on Instagram, X/Twitter, YouTube, Reddit, LinkedIn, Facebook, TikTok, Threads, and custom platforms.
-  * **Text Selection Floating Action Shield (FAB)**: Highlight any text on *any website* to spawn an inline ToxiGuard shield icon for instant analysis.
-  * **Side Panel Companion App**: Uses `chrome.sidePanel` API to provide persistent workspace analytics, manual query tester, and live feed logs.
-  * **Configurable Shield Modes**: Choose between **Highlight** (crimson border), **Blur** (CSS backdrop blur), or **Remove** (hides toxic DOM element completely).
 
-### 6. React SaaS Analytics Dashboard
-* **Directory**: `frontend/src/`.
-* **Features**:
-  * **Interactive Live Demo**: Instant real-time text analysis with animated step-by-step layer progress indicator.
-  * **Analytics Dashboard**: Recharts-driven graphs showing toxicity trends, severity distributions, and word frequency clouds.
-  * **CSV/Text Batch File Uploader**: Drag-and-drop file processing for bulk dataset content moderation.
-  * **Auth & API Key Management**: User signup/login issuing JWT tokens and persistent API keys for custom developer integrations.
+- **Directory**: `extension/`.
+- MutationObserver feed scanner for social platforms, text selection floating action shield (FAB), and persistent side-panel companion controls.
 
+### 6. React SaaS Analytics Dashboard & Product Simulator
+
+- **Directory**: `frontend/src/`.
+- Real-time interactive moderation simulator, Recharts analytics visualizations, CSV bulk batch uploader, and developer API key management.
+
+### 7. Production Legal & Compliance Suite
+
+- **Routes**: `/privacy` (`Privacy.jsx`) & `/terms` (`Terms.jsx`).
+- Complete 10-section policies detailing volatile memory evaluation, zero payload retention, GDPR/CCPA data subject rights, and extension security guarantees. Adblock-safe routing prevents client bundle blocking.
+
+---
 
 ## ⚙️ Technology Stack & "Why We Chose It"
 
-### 🐍 Backend Stack
+### Backend Stack
 
 | Technology | Used For | Why We Chose It |
 | :--- | :--- | :--- |
-| **FastAPI (Python 3.10+)** | Primary REST API Framework | Native async support (`async/await`), automatic OpenAPI/Swagger documentation generation, Pydantic v2 data validation, and superior performance compared to Flask/Django. |
-| **Uvicorn / Gunicorn** | ASGI Server | Enterprise-grade asynchronous concurrency capable of handling thousands of requests/sec. |
-| **SQLAlchemy** | Database ORM | Flexible abstraction supporting SQLite for local rapid dev and PostgreSQL for production deployments. |
-| **Pydantic v2** | Data Serialization & Validation | Blazing fast Rust-backed validation ensuring strict schema enforcement across all endpoints. |
-| **SlowAPI** | Rate Limiting | Protects API endpoints against DDoS attacks and brute-force key exploitation (per-IP & per-token limits). |
+| **FastAPI (Python 3.10+)** | Primary REST API Framework | Native async support (`async/await`), automatic OpenAPI/Swagger documentation, Pydantic v2 data validation, and high performance. |
+| **Uvicorn / Gunicorn** | ASGI Server | Enterprise-grade asynchronous concurrency handling thousands of requests/sec. |
+| **SQLAlchemy** | Database ORM | Flexible abstraction supporting SQLite for local rapid dev and PostgreSQL for production. |
+| **Pydantic v2** | Data Serialization & Validation | Fast Rust-backed validation ensuring strict schema enforcement across all endpoints. |
+| **SlowAPI** | Rate Limiting | Protects API endpoints against brute-force key exploitation and traffic spikes. |
 
-### 🌐 Frontend Stack
-
-| Technology | Used For | Why We Chose It |
-| :--- | :--- | :--- |
-| **React 18** | UI Library | Component-based SPA architecture with fast virtual DOM reconciliation for smooth live updates. |
-| **Vite 5** | Build Tool & Dev Server | Sub-second Instant Hot Module Replacement (HMR) and optimized esbuild bundle compilation. |
-| **Vanilla CSS (Design Tokens)** | Styling & Animations | Built with custom CSS variables, glassmorphism (`backdrop-filter`), and zero reliance on heavy frameworks like Tailwind, ensuring 100% control over design and lightning-fast load times. |
-| **Recharts** | Data Visualization | Modular SVG-based chart library providing responsive, animated charts for analytics. |
-
-### 🧠 AI / ML Stack
+### Frontend Stack
 
 | Technology | Used For | Why We Chose It |
 | :--- | :--- | :--- |
-| **scikit-learn** | ML Classification Pipeline | TF-IDF vectorization paired with Logistic Regression provides ultra-fast inference (~20ms) with lightweight memory overhead. |
-| **ONNX Runtime** | Deep Learning Inference | Converts heavy HuggingFace Transformers (DeBERTa) into highly optimized cross-platform CPU execution binaries. |
-| **OpenRouter API** | LLM Gateway | Provides seamless access to top-tier open models (**Gemma 4 31B** & **Qwen3 80B**) with automated zero-downtime fallback mechanisms. |
+| **React 18** | UI Library | Component-based SPA architecture with fast virtual DOM reconciliation for smooth updates. |
+| **Vite 5** | Build Tool & Dev Server | Sub-second Instant Hot Module Replacement (HMR) and optimized rollup bundle compilation. |
+| **Editorial Design System** | Styling & Theme Engine | Built with custom CSS variables, zero heavy CSS utility dependencies, and first-class Dark/Light mode tokens. |
+| **Recharts** | Data Visualization | Modular SVG-based chart library providing responsive charts for analytics. |
+
+### AI / ML Stack
+
+| Technology | Used For | Why We Chose It |
+| :--- | :--- | :--- |
+| **scikit-learn** | ML Classification Pipeline | TF-IDF vectorization paired with Logistic Regression provides ultra-fast inference (~20ms) with low memory overhead. |
+| **ONNX Runtime** | Deep Learning Inference | Converts heavy HuggingFace Transformers (DeBERTa) into optimized CPU execution binaries. |
+| **OpenRouter API** | LLM Gateway | Provides access to top-tier open models (**Gemma 4 31B** & **Qwen3 80B**) with automated zero-downtime fallback. |
 | **NLTK / TextBlob / VADER** | Text Processing & Sentiment | Fast rule-based sentiment scoring complementing ML probabilistic predictions. |
 
-### 🔌 Chrome Extension Stack
+### Chrome Extension Stack
 
 | Technology | Used For | Why We Chose It |
 | :--- | :--- | :--- |
@@ -222,10 +228,9 @@ The backbone of ToxiGuard AI is its 3-layer cascaded decision matrix. Text enter
 | **MutationObserver API** | DOM Monitoring | Asynchronously detects new social media feed posts without polling or degrading browser FPS. |
 | **Chrome SidePanel API** | Side Panel UI | Provides a clean, persistent side panel workspace within the user's browser workflow. |
 
+---
 
 ## 🔄 End-to-End Execution Workflow & Data Lifecycle
-
-To understand how a single piece of text moves through the ToxiGuard AI system, follow this sequence:
 
 ```text
 [ User Action ]
@@ -234,7 +239,7 @@ To understand how a single piece of text moves through the ToxiGuard AI system, 
          │
          ▼
 [ Step 1: Preprocessing & Normalization ]
-  • Raw text is lowercased, stripped of invisible control bytes, and normalized.
+  • Raw text is lowercased, stripped of control bytes, and normalized.
   • Leetspeak substitutions are resolved (e.g., "b!tch" -> "bitch").
          │
          ▼
@@ -243,15 +248,15 @@ To understand how a single piece of text moves through the ToxiGuard AI system, 
   • IF MATCHED: Instantly tag toxic=True, confidence=1.0, source="rule_engine" -> RETURN.
          │
          ▼
-[ Step 3: Layer 2 Machine Learning Classifier (~20ms) ]
-  • Text is vectorized via TF-IDF matrix.
-  • Logistic Regression model computes toxicity probability score `p`.
+[ Step 3: Layer 2 Machine Learning Classifier (~20–35ms) ]
+  • Text is vectorized via TF-IDF matrix or evaluated via ONNX Transformer.
+  • Model computes calibrated toxicity probability score p.
   • IF confidence is decisive (p > 0.85 OR p < 0.15): Tag toxic=(p>0.5), source="ml_classifier" -> RETURN.
          │
          ▼
-[ Step 4: Layer 3 LLM Reasoning (~600ms) ]
+[ Step 4: Layer 3 LLM Reasoning (~400–600ms) ]
   • IF text is ambiguous (0.15 <= p <= 0.85): Forward payload to OpenRouter API (Gemma 4 31B).
-  • If Gemma times out or fails: Instantly fallback to Qwen3 Next 80B Instruct.
+  • Fallback to Qwen3 80B if primary gateway times out.
   • LLM evaluates subtle context, sarcasm, and generates natural language explanation.
          │
          ▼
@@ -263,9 +268,10 @@ To understand how a single piece of text moves through the ToxiGuard AI system, 
 [ Step 6: Response & Enforcement ]
   • API returns JSON payload to client.
   • Chrome Extension applies chosen shield action (Blur, Highlight, or Remove DOM element).
-  • React Dashboard logs analytics entry in SQLite/PostgreSQL database.
+  • In-memory payload is immediately discarded; zero disk retention.
 ```
 
+---
 
 ## 🏗️ Complete Project Directory Structure
 
@@ -320,9 +326,10 @@ ToxiGuard-AI/
 │   │   ├── api.js                  # Axios client wrapper with automatic environment switching
 │   │   ├── styles.css              # Global Vanilla CSS design system (tokens & utilities)
 │   │   ├── components/
-│   │   │   ├── LiveDemo.jsx        # Interactive real-time scanner on homepage
+│   │   │   ├── LiveDemo.jsx        # Interactive real-time feed simulator on homepage
 │   │   │   ├── LiveResult.jsx      # Detailed analysis result card & score badges
-│   │   │   ├── Header.jsx          # Navigation header with auth controls
+│   │   │   ├── Header.jsx          # 60px sticky header with theme switcher & auth controls
+│   │   │   ├── ThemeToggle.jsx     # Dedicated 36x36px square sun/moon theme switcher
 │   │   │   ├── Charts.jsx          # Recharts visualizations (toxicity pie & bar charts)
 │   │   │   ├── AbuseTable.jsx      # Sortable/searchable historical moderation logs table
 │   │   │   ├── FileUpload.jsx      # Drag-and-drop CSV batch dataset analyzer
@@ -333,10 +340,14 @@ ToxiGuard-AI/
 │   │   │   ├── ErrorBoundary.jsx   # React crash prevention boundary
 │   │   │   └── Toast.jsx           # Global UI toast notifications
 │   │   └── pages/
-│   │       ├── Home.jsx / Home.css         # Hero landing page
+│   │       ├── Home.jsx / Home.css         # Hero landing page with code tabs & FAQ
 │   │       ├── Dashboard.jsx               # Authenticated analytics workspace
-│   │       ├── Login.jsx / Signup.jsx      # Authentication pages
-│   │       └── InstallExtension.jsx/.css   # Chrome Extension installation guide
+│   │       ├── Login.jsx / Login.css       # Sign in page with media panel
+│   │       ├── Signup.jsx / Signup.css     # Account creation page with media panel
+│   │       ├── InstallExtension.jsx/.css   # Chrome Extension installation guide
+│   │       ├── Privacy.jsx                 # 10-section zero-retention Privacy Policy
+│   │       ├── Terms.jsx                   # 10-section production Terms of Service
+│   │       └── NotFound.jsx                # 404 error page
 │   ├── package.json                # Frontend npm dependencies
 │   └── vite.config.js              # Vite server & bundler configuration
 │
@@ -359,12 +370,14 @@ ToxiGuard-AI/
 └── README.md                       # Comprehensive project documentation
 ```
 
+---
 
 ## 🔗 Comprehensive API Reference
 
 ### Authentication Endpoints
 
 #### 1. User Signup — `POST /auth/signup`
+
 Creates a new account and returns a unique developer API key.
 
 ```bash
@@ -374,6 +387,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/auth/signup \
 ```
 
 #### 2. User Login — `POST /auth/login`
+
 Authenticates credentials and returns a JWT token along with the user's API key.
 
 ```bash
@@ -382,10 +396,12 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/auth/login \
   -d '{"email": "developer@company.com", "password": "SecurePassword123!"}'
 ```
 
+---
 
 ### Moderation & Analysis Endpoints
 
 #### 1. Full 3-Layer Moderation — `POST /predict`
+
 Executes complete cascaded analysis (Rule Engine $\rightarrow$ ML Classifier $\rightarrow$ LLM Reasoner).
 
 ```bash
@@ -396,6 +412,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/predict \
 ```
 
 **Example Response**:
+
 ```json
 {
   "toxic": true,
@@ -418,6 +435,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/predict \
 ```
 
 #### 2. Fast ML-Only Moderation — `POST /predict/ml`
+
 Runs fast Rule + ML classification only (**~20ms response time**, bypasses LLM call).
 
 ```bash
@@ -427,10 +445,12 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/predict/ml \
   -d '{"text": "Have a great day everyone!"}'
 ```
 
+---
 
 ### Explainability, Stream & Monitoring Endpoints
 
 #### 1. Token Feature Attribution — `POST /explain`
+
 Returns word-level impact weights for interactive token heatmaps.
 
 ```bash
@@ -441,6 +461,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/explain \
 ```
 
 **Example Response**:
+
 ```json
 {
   "text": "This movie was terribly bad and stupid.",
@@ -457,6 +478,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/explain \
 ```
 
 #### 2. Real-Time Stream Processing — `POST /stream`
+
 Processes arrays of messages for high-throughput live streams.
 
 ```bash
@@ -471,6 +493,7 @@ curl -X POST https://toxiguard-ai-agent-1.onrender.com/stream \
   }'
 ```
 
+---
 
 ## 🚀 Quick Start & Local Setup Guide
 
@@ -493,6 +516,7 @@ docker-compose up --build
 | **FastAPI Backend API** | `http://localhost:8000` |
 | **Interactive Swagger Docs** | `http://localhost:8000/docs` |
 
+---
 
 ### Option 2: Local Backend Setup
 
@@ -513,6 +537,7 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file inside `backend/`:
+
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 OPENROUTER_MODEL=google/gemma-4-31b-it:free
@@ -523,6 +548,7 @@ ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 
 Train ML model & run backend server:
+
 ```bash
 # Train local TF-IDF model weights
 python train_model.py
@@ -531,6 +557,7 @@ python train_model.py
 uvicorn app.main:app --reload --port 8000
 ```
 
+---
 
 ### Option 3: Local Frontend Setup
 
@@ -542,37 +569,46 @@ npm install
 ```
 
 Create a `.env` file inside `frontend/`:
+
 ```env
 VITE_BACKEND_URL=http://127.0.0.1:8000
 ```
 
 Run Vite dev server:
+
 ```bash
 npm run dev
 ```
+
 Open `http://localhost:5173` in your browser.
 
+---
 
 ### Option 4: Chrome Extension Load
 
-#### Windows 1-Click Auto-Launcher:
+#### Windows 1-Click Auto-Launcher
+
 Double-click `1-click-install.bat` in the project root folder. It automatically boots Chrome with the extension pre-loaded.
 
-#### Manual Chrome Load:
+#### Manual Chrome Load
+
 1. Open Chrome and navigate to `chrome://extensions`.
 2. Enable **Developer mode** (toggle in top-right corner).
 3. Click **Load unpacked** and select the `extension/` folder.
 4. Click the ToxiGuard shield icon in your toolbar and enter your API key!
 
+---
 
-## 🔒 Security, Rate Limiting & Compliance
+## 🔒 Security, Privacy & Zero-Retention Compliance
 
-* **JWT Token Security**: Passwords hashed using `bcrypt` with salt rounds. Session tokens signed using `HS256`.
-* **API Key Protection**: Key validation required for API routes; unique keys issued per account.
-* **Per-IP & Per-Token Rate Limiting**: SlowAPI restricts unauthenticated abuse (e.g. 60 requests/minute).
-* **CORS Domain Whitelisting**: Strict origin controls prevent unauthorized cross-domain browser requests.
-* **Zero Prompt Training Guarantee**: OpenRouter LLM requests configured with `No prompt training` policies to guarantee user data privacy.
+- **Volatile Memory Evaluation**: All moderation queries are scored in RAM and immediately discarded. No customer input strings are saved to disk or relational databases.
+- **No Training on User Data**: Payloads submitted through API keys or the extension are never utilized to train, retrain, or calibrate neural weights.
+- **JWT & API Key Protection**: Passwords hashed using `bcrypt` / `Argon2` with salt rounds. Session tokens signed using `HS256`.
+- **Per-IP & Per-Token Rate Limiting**: SlowAPI restricts unauthenticated abuse (e.g. 60 requests/minute).
+- **CORS Domain Whitelisting**: Strict origin controls prevent unauthorized cross-domain browser requests.
+- **Adblock-Safe Routing**: Client-side legal pages are bundle-isolated (`/privacy` and `/terms`) to prevent heuristic false positives in Brave Shields and uBlock Origin.
 
+---
 
 ## ✅ Final System Verification & Audit Checklist
 
@@ -583,11 +619,13 @@ To verify that all components of the ToxiGuard AI ecosystem function properly:
 | **Backend** | 3-Layer Moderation Engine | `ACTIVE` | Tested `/predict` and `/predict/ml` endpoints |
 | **Backend** | XAI Explainability Engine | `ACTIVE` | Verified token attribution via `/explain` |
 | **Backend** | Concept Drift & Calibration | `ACTIVE` | Tested `/monitoring` and `/feedback` pipelines |
-| **Frontend** | React SPA & Glassmorphism UI | `ACTIVE` | Compiled bundle with 0 esbuild errors (`npm run build`) |
-| **Frontend** | Interactive Heatmap & Stream | `ACTIVE` | Verified `TokenHeatmap.jsx` & `StreamAnalyzer.jsx` |
-| **Extension**| Manifest V3 Shield & Selection | `ACTIVE` | Verified `<all_urls>` injection, FAB, & side panel |
-| **Docs** | Project Documentation | `COMPLETE` | Fully verified `README.md`, `system_design.md` & `walkthrough.md` |
+| **Frontend** | React SPA & Design System | `ACTIVE` | Compiled bundle with 0 errors (`npm run build`) |
+| **Frontend** | Interactive Simulator & Tabs | `ACTIVE` | Verified `LiveDemo.jsx` & multi-lang code tabs |
+| **Frontend** | Legal & Compliance Suite | `ACTIVE` | Verified `/privacy` and `/terms` adblock-safe routes |
+| **Extension** | Manifest V3 Shield & Selection | `ACTIVE` | Verified `<all_urls>` injection, FAB, & side panel |
+| **Docs** | Project Documentation | `COMPLETE` | Fully verified `README.md`, `system_design.md` & `claim_justifications.md` |
 
+---
 
 ## 👨‍💻 Author & License
 

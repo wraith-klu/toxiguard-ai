@@ -17,8 +17,10 @@ export default function Header({ onLogout, isDashboard = false }) {
   const navLinks = isDashboard
     ? []
     : [
-      { path: "/", label: "Home" },
+      { path: "/", label: "Overview" },
       { path: "/install", label: "Extension" },
+      { path: "/privacy", label: "Privacy" },
+      { path: "/terms", label: "Terms" },
     ];
 
   // Close dropdown on click outside
@@ -55,60 +57,36 @@ export default function Header({ onLogout, isDashboard = false }) {
     }
   };
 
-  const getHash = (str) => {
-    let hash = 0;
-    if (!str) return 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return Math.abs(hash);
-  };
-
-  const renderAvatar = (emailStr) => {
-    const hash = emailStr ? getHash(emailStr) : 0;
-    const gradients = [
-      ["#38bdf8", "#6366f1"],
-      ["#ec4899", "#f43f5e"],
-      ["#10b981", "#059669"],
-      ["#f59e0b", "#d97706"],
-      ["#8b5cf6", "#d946ef"]
-    ];
-    const [c1, c2] = gradients[hash % gradients.length];
-    
-    return (
-      <svg width="100%" height="100%" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id={`grad-${hash}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={c1} />
-            <stop offset="100%" stopColor={c2} />
-          </linearGradient>
-        </defs>
-        <circle cx="20" cy="20" r="20" fill={`url(#grad-${hash})`} />
-        
-        {/* Character illustration overlay */}
-        <rect x="12" y="12" width="16" height="13" rx="3" fill="white" fillOpacity="0.25" stroke="white" strokeWidth="1.5" />
-        <rect x="14" y="15" width="12" height="4" rx="1" fill="#0f172a" />
-        <circle cx="17.5" cy="17" r="1" fill="#38bdf8" />
-        <circle cx="22.5" cy="17" r="1" fill="#38bdf8" />
-        <path d="M17 21H23" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
-        <line x1="20" y1="12" x2="20" y2="8" stroke="white" strokeWidth="1.2" />
-        <circle cx="20" cy="7" r="1" fill="#38bdf8" />
-        <path d="M11 33C11 30 15 28 20 28C25 28 29 30 29 33" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
+  const getInitials = (emailStr) => {
+    if (!emailStr) return "TG";
+    const name = emailStr.split("@")[0];
+    return name.slice(0, 2).toUpperCase();
   };
 
   return (
     <header className="tg-header">
       <div className="tg-header-inner">
-        {/* Logo */}
-        <Link to="/" className="tg-logo">
-          <span className="tg-logo-icon">◆</span>
-          <span className="tg-logo-text">ToxiGuard</span>
-          <span className="tg-logo-badge">AI</span>
+        {/* Brand Wordmark */}
+        <Link to="/" className="tg-brand-link">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--app-accent)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="tg-brand-shield"
+            aria-hidden="true"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span className="tg-brand-title">ToxiGuard</span>
+          <span className="tg-brand-pill">AI</span>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop Navigation */}
         <nav className="tg-nav">
           {navLinks.map((link) => (
             <Link
@@ -121,128 +99,148 @@ export default function Header({ onLogout, isDashboard = false }) {
           ))}
         </nav>
 
-        {/* Actions */}
+        {/* Header Right Actions */}
         <div className="tg-header-actions">
           <ThemeToggle />
+
           {apiKey ? (
             <div className="tg-user-dropdown-container" ref={dropdownRef}>
-              <div 
-                className="tg-user-profile-badge"
+              <button
+                type="button"
+                className="tg-user-trigger"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-expanded={dropdownOpen}
               >
-                <div className="tg-avatar-circle">
-                  {renderAvatar(email)}
-                </div>
-                <div className="tg-user-info-text">
+                <div className="tg-avatar-badge">{getInitials(email)}</div>
+                <div className="tg-user-meta">
                   <span className="tg-user-name">{userName}</span>
                   <span className="tg-user-email">{email}</span>
                 </div>
-                <span className={`tg-dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>▼</span>
-              </div>
-              
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className={`tg-arrow-icon ${dropdownOpen ? "open" : ""}`}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+
               {dropdownOpen && (
-                <div className="tg-user-dropdown-menu animate-scale-in">
+                <div className="tg-dropdown-card">
                   <div className="tg-dropdown-header">
                     <strong>{userName}</strong>
                     <span>{email}</span>
                   </div>
-                  <hr className="tg-dropdown-divider" />
-                  <Link to="/dashboard" className="tg-dropdown-item" onClick={() => setDropdownOpen(false)}>
-                    📊 Dashboard
+                  <hr className="tg-dropdown-rule" />
+                  <Link
+                    to="/dashboard"
+                    className="tg-dropdown-item"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Dashboard
                   </Link>
-                  <Link to="/install" className="tg-dropdown-item" onClick={() => setDropdownOpen(false)}>
-                    🔌 Install Extension
+                  <Link
+                    to="/install"
+                    className="tg-dropdown-item"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Extension Setup
                   </Link>
-                  <hr className="tg-dropdown-divider" />
-                  <button className="tg-dropdown-item tg-dropdown-logout" onClick={handleDropdownLogout}>
-                    🚪 Sign Out
+                  <hr className="tg-dropdown-rule" />
+                  <button
+                    type="button"
+                    className="tg-dropdown-item tg-dropdown-logout"
+                    onClick={handleDropdownLogout}
+                  >
+                    Sign Out
                   </button>
                 </div>
               )}
             </div>
           ) : (
-            <>
+            <div className="tg-auth-actions">
               <Link to="/login" className="tg-btn-ghost">
-                Log In
+                Sign In
               </Link>
-              <Link to="/signup" className="tg-btn-primary-sm">
+              <Link to="/signup" className="tg-btn-primary">
                 Get Started
               </Link>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Hamburger Toggle */}
         <button
+          type="button"
           className="tg-mobile-toggle"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          aria-label="Toggle navigation menu"
         >
-          <span className={`tg-hamburger ${mobileOpen ? "open" : ""}`} />
+          <span className={`tg-hamburger-bar ${mobileOpen ? "open" : ""}`} />
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="tg-mobile-menu animate-slide-down">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid var(--surface-glass-border)", marginBottom: "8px" }}>
-            <span style={{ color: "var(--text-secondary)", fontSize: "0.85rem", fontWeight: 600 }}>THEME</span>
+        <div className="tg-mobile-drawer">
+          <div className="tg-mobile-theme-row">
+            <span>Interface Mode</span>
             <ThemeToggle />
           </div>
-
-          {apiKey && (
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "12px 16px", borderBottom: "1px solid var(--surface-glass-border)", marginBottom: "8px" }}>
-              <div className="tg-avatar-circle" style={{ width: "36px", height: "36px" }}>
-                {renderAvatar(email)}
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
-                <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>{userName}</span>
-                <span style={{ fontSize: "0.7rem", color: "var(--text-tertiary)" }}>{email}</span>
-              </div>
-            </div>
-          )}
 
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className="tg-mobile-link"
+              className="tg-mobile-nav-link"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          
+
           {apiKey ? (
-            <>
+            <div className="tg-mobile-auth-section">
               <Link
                 to="/dashboard"
-                className="tg-mobile-link"
+                className="tg-mobile-nav-link"
                 onClick={() => setMobileOpen(false)}
               >
-                📊 Dashboard
+                Dashboard
               </Link>
-              <button className="tg-mobile-link tg-dropdown-logout" onClick={() => { setMobileOpen(false); handleDropdownLogout(); }}>
-                🚪 Sign Out
+              <button
+                type="button"
+                className="tg-mobile-nav-link tg-logout-link"
+                onClick={() => {
+                  setMobileOpen(false);
+                  handleDropdownLogout();
+                }}
+              >
+                Sign Out
               </button>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="tg-mobile-auth-section">
               <Link
                 to="/login"
-                className="tg-mobile-link"
+                className="tg-mobile-nav-link"
                 onClick={() => setMobileOpen(false)}
               >
-                Log In
+                Sign In
               </Link>
               <Link
                 to="/signup"
-                className="tg-mobile-link tg-mobile-primary"
+                className="tg-btn-primary tg-mobile-cta"
                 onClick={() => setMobileOpen(false)}
               >
                 Get Started
               </Link>
-            </>
+            </div>
           )}
         </div>
       )}
@@ -251,283 +249,267 @@ export default function Header({ onLogout, isDashboard = false }) {
         .tg-header {
           position: sticky;
           top: 0;
+          height: 60px;
+          background: var(--app-bg);
+          border-bottom: 1px solid var(--app-rule);
           z-index: 100;
-          -webkit-backdrop-filter: blur(20px) saturate(140%);
-          backdrop-filter: blur(20px) saturate(140%);
-          background: var(--surface-glass);
-          border-bottom: 1px solid var(--surface-glass-border);
         }
 
         .tg-header-inner {
-          max-width: 1200px;
+          max-width: 1120px;
           margin: 0 auto;
-          padding: 0 24px;
-          height: 64px;
+          height: 100%;
+          padding: 0 max(1.25rem, 4vw);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 32px;
+          gap: 24px;
         }
 
-        /* Logo */
-        .tg-logo {
+        .tg-brand-link {
           display: flex;
           align-items: center;
           gap: 8px;
           text-decoration: none;
+          color: var(--app-ink);
+        }
+
+        .tg-brand-shield {
           flex-shrink: 0;
         }
 
-        .tg-logo-icon {
-          font-size: 1.2rem;
-          background: linear-gradient(135deg, #38bdf8, #6366f1);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .tg-logo-text {
-          font-family: "Outfit", system-ui, sans-serif;
-          font-weight: 800;
+        .tg-brand-title {
+          font-family: var(--font-serif);
           font-size: 1.25rem;
-          color: var(--text-primary);
-          letter-spacing: -0.3px;
-        }
-
-        .tg-logo-badge {
-          font-family: "Outfit", system-ui, sans-serif;
-          font-size: 0.6rem;
           font-weight: 700;
-          padding: 2px 6px;
-          border-radius: 4px;
-          background: linear-gradient(135deg, #38bdf8, #6366f1);
-          color: #fff;
-          letter-spacing: 0.5px;
+          letter-spacing: -0.02em;
+          color: var(--app-ink);
         }
 
-        /* Nav Links */
+        .tg-brand-pill {
+          font-family: var(--font-sans);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--app-accent);
+          background: var(--app-accent-soft);
+          padding: 2px 6px;
+          border-radius: var(--radius-xs);
+        }
+
         .tg-nav {
           display: flex;
-          gap: 4px;
           align-items: center;
+          gap: 4px;
         }
 
         .tg-nav-link {
-          padding: 8px 16px;
-          border-radius: 8px;
+          font-family: var(--font-sans);
           font-size: 0.875rem;
           font-weight: 500;
-          color: var(--text-secondary);
+          color: var(--app-ink-subtle);
           text-decoration: none;
-          transition: all 0.2s ease;
+          padding: 6px 12px;
+          border-radius: 6px;
+          transition: color var(--transition-fast), background var(--transition-fast);
         }
 
         .tg-nav-link:hover {
-          color: var(--text-primary);
-          background: var(--surface-glass-hover);
+          color: var(--app-ink);
+          background: var(--app-surface);
         }
 
         .tg-nav-link.active {
-          color: #38bdf8;
-          background: rgba(56, 189, 248, 0.08);
+          color: var(--app-ink);
+          font-weight: 600;
         }
 
-        /* Actions */
         .tg-header-actions {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 12px;
+        }
+
+        .tg-auth-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
 
         .tg-btn-ghost {
-          padding: 8px 18px;
-          border-radius: 999px;
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-          background: none;
-          border: 1px solid transparent;
-          cursor: pointer;
-          transition: all 0.2s ease;
+          font-family: var(--font-sans);
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: var(--app-ink);
           text-decoration: none;
-          font-family: "Inter", system-ui, sans-serif;
+          padding: 7px 14px;
+          border-radius: 7px;
+          border: 1px solid transparent;
+          transition: background var(--transition-fast), border-color var(--transition-fast);
         }
 
         .tg-btn-ghost:hover {
-          color: var(--text-primary);
-          background: var(--surface-glass-hover);
-          border-color: var(--surface-glass-border);
+          background: var(--app-surface);
+          border-color: var(--app-rule);
         }
 
-        .tg-btn-primary-sm {
-          padding: 8px 20px;
-          border-radius: 999px;
-          font-size: 0.85rem;
-          font-weight: 700;
-          background: linear-gradient(135deg, #38bdf8, #6366f1);
-          color: #fff;
+        .tg-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--font-sans);
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #ffffff;
+          background: var(--app-accent);
           text-decoration: none;
-          transition: all 0.2s ease;
-          font-family: "Outfit", system-ui, sans-serif;
+          padding: 8px 16px;
+          border-radius: 7px;
+          border: 1px solid transparent;
+          cursor: pointer;
+          transition: background var(--transition-fast), transform var(--transition-fast);
         }
 
-        .tg-btn-primary-sm:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+        .tg-btn-primary:hover {
+          background: var(--app-accent-hover);
         }
 
-        /* User Profile Dropdown Card */
-        .tg-user-dropdown-container {
-          position: relative;
+        .tg-btn-primary:active {
+          transform: scale(0.98);
         }
 
-        .tg-user-profile-badge {
+        .tg-user-trigger {
           display: flex;
           align-items: center;
-          gap: 10px;
-          padding: 6px 14px 6px 6px;
-          background: rgba(255, 255, 255, 0.45);
-          border: 1px solid var(--surface-glass-border);
-          border-radius: var(--radius-full);
+          gap: 8px;
+          background: var(--app-surface);
+          border: 1px solid var(--app-rule);
+          border-radius: 7px;
+          padding: 4px 10px 4px 6px;
           cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: var(--neo-btn-shadow);
-          user-select: none;
+          color: var(--app-ink);
+          transition: background var(--transition-fast), border-color var(--transition-fast);
         }
 
-        [data-theme="dark"] .tg-user-profile-badge {
-          background: rgba(15, 23, 42, 0.45);
+        .tg-user-trigger:hover {
+          background: var(--app-surface-hover);
+          border-color: var(--app-accent);
         }
 
-        .tg-user-profile-badge:hover {
-          background: rgba(255, 255, 255, 0.7);
-          box-shadow: var(--neo-btn-shadow-hover);
-          border-color: rgba(56, 189, 248, 0.3);
+        .tg-avatar-badge {
+          width: 26px;
+          height: 26px;
+          border-radius: 5px;
+          background: var(--app-accent-soft);
+          color: var(--app-accent);
+          font-family: var(--font-mono);
+          font-size: 0.6875rem;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        [data-theme="dark"] .tg-user-profile-badge:hover {
-          background: rgba(15, 23, 42, 0.7);
-        }
-
-        .tg-avatar-circle {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          overflow: hidden;
-          background: rgba(255, 255, 255, 0.2);
-          box-shadow: var(--neo-btn-shadow);
-        }
-
-        .tg-user-info-text {
+        .tg-user-meta {
           display: flex;
           flex-direction: column;
           text-align: left;
         }
 
         .tg-user-name {
-          font-family: var(--font-heading);
-          font-weight: 700;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
+          font-weight: 600;
           line-height: 1.2;
-          color: var(--text-primary);
+          color: var(--app-ink);
         }
 
         .tg-user-email {
+          font-family: var(--font-mono);
           font-size: 0.65rem;
-          line-height: 1.1;
-          color: var(--text-tertiary);
-          max-width: 110px;
+          color: var(--app-ink-subtle);
+          max-width: 100px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
-        .tg-dropdown-arrow {
-          font-size: 0.6rem;
-          color: var(--text-tertiary);
-          transition: transform 0.2s ease;
+        .tg-arrow-icon {
+          color: var(--app-ink-subtle);
+          transition: transform var(--transition-fast);
         }
 
-        .tg-dropdown-arrow.open {
+        .tg-arrow-icon.open {
           transform: rotate(180deg);
         }
 
-        /* Dropdown Menu - Glassmorphic + Neomorphic outset */
-        .tg-user-dropdown-menu {
+        .tg-dropdown-card {
           position: absolute;
-          top: calc(100% + 10px);
+          top: calc(100% + 8px);
           right: 0;
-          width: 200px;
-          background: var(--surface-glass);
-          -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
-          border: 1px solid var(--surface-glass-border);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--neo-outset);
-          padding: 12px 8px;
+          width: 210px;
+          background: var(--app-surface);
+          border: 1px solid var(--app-rule);
+          border-radius: var(--radius-md);
+          box-shadow: var(--app-shadow-lg);
+          padding: 8px;
           z-index: 1000;
-          transform-origin: top right;
         }
 
         .tg-dropdown-header {
+          padding: 6px 8px;
           display: flex;
           flex-direction: column;
-          padding: 4px 10px 10px;
-          text-align: left;
         }
 
         .tg-dropdown-header strong {
-          font-family: var(--font-heading);
-          font-size: 0.85rem;
-          color: var(--text-primary);
+          font-size: 0.8125rem;
+          color: var(--app-ink);
         }
 
         .tg-dropdown-header span {
-          font-size: 0.7rem;
-          color: var(--text-tertiary);
+          font-family: var(--font-mono);
+          font-size: 0.6875rem;
+          color: var(--app-ink-subtle);
           word-break: break-all;
         }
 
-        .tg-dropdown-divider {
-          border: 0;
-          height: 1px;
-          background: var(--surface-glass-border);
+        .tg-dropdown-rule {
+          border: none;
+          border-top: 1px solid var(--app-rule);
           margin: 6px 0;
         }
 
         .tg-dropdown-item {
           display: block;
           width: 100%;
-          padding: 8px 10px;
-          border-radius: var(--radius-sm);
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: var(--text-secondary);
+          padding: 7px 8px;
+          border-radius: 5px;
+          font-size: 0.8125rem;
+          font-weight: 500;
+          color: var(--app-ink-muted);
           text-decoration: none;
           background: none;
           border: none;
           text-align: left;
           cursor: pointer;
-          transition: all 0.2s ease;
-          box-sizing: border-box;
-          font-family: var(--font-body);
+          transition: background var(--transition-fast), color var(--transition-fast);
         }
 
         .tg-dropdown-item:hover {
-          color: var(--text-primary);
-          background: var(--surface-glass-hover);
+          background: var(--app-surface-hover);
+          color: var(--app-ink);
         }
 
         .tg-dropdown-logout {
-          color: var(--accent-rose);
+          color: var(--color-danger);
         }
 
         .tg-dropdown-logout:hover {
-          background: rgba(244, 63, 94, 0.08);
-          color: var(--accent-rose);
+          background: var(--color-danger-soft);
+          color: var(--color-danger);
         }
 
-        /* Mobile Toggle */
         .tg-mobile-toggle {
           display: none;
           background: none;
@@ -536,75 +518,95 @@ export default function Header({ onLogout, isDashboard = false }) {
           cursor: pointer;
         }
 
-        .tg-hamburger {
+        .tg-hamburger-bar {
           display: block;
           width: 20px;
           height: 2px;
-          background: var(--text-secondary);
+          background: var(--app-ink);
           position: relative;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
         }
 
-        .tg-hamburger::before,
-        .tg-hamburger::after {
+        .tg-hamburger-bar::before,
+        .tg-hamburger-bar::after {
           content: "";
           position: absolute;
           width: 20px;
           height: 2px;
-          background: var(--text-secondary);
-          transition: all 0.3s ease;
+          background: var(--app-ink);
+          transition: all 0.2s ease;
         }
 
-        .tg-hamburger::before { top: -6px; }
-        .tg-hamburger::after { top: 6px; }
+        .tg-hamburger-bar::before { top: -6px; }
+        .tg-hamburger-bar::after { top: 6px; }
 
-        .tg-hamburger.open { background: transparent; }
-        .tg-hamburger.open::before { top: 0; transform: rotate(45deg); }
-        .tg-hamburger.open::after { top: 0; transform: rotate(-45deg); }
+        .tg-hamburger-bar.open { background: transparent; }
+        .tg-hamburger-bar.open::before { top: 0; transform: rotate(45deg); }
+        .tg-hamburger-bar.open::after { top: 0; transform: rotate(-45deg); }
 
-        /* Mobile Menu */
-        .tg-mobile-menu {
+        .tg-mobile-drawer {
           display: none;
           flex-direction: column;
-          padding: 12px 24px 20px;
-          border-top: 1px solid var(--surface-glass-border);
-          background: var(--bg-card);
+          background: var(--app-surface);
+          border-bottom: 1px solid var(--app-rule);
+          padding: 16px max(1.25rem, 4vw) 20px;
+          gap: 8px;
         }
 
-        .tg-mobile-link {
-          padding: 12px 16px;
-          color: var(--text-secondary);
+        .tg-mobile-theme-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 12px;
+          border-bottom: 1px solid var(--app-rule);
+          margin-bottom: 4px;
+          font-size: 0.8125rem;
+          color: var(--app-ink-subtle);
+        }
+
+        .tg-mobile-nav-link {
+          font-size: 0.9375rem;
+          color: var(--app-ink-muted);
           text-decoration: none;
-          font-size: 0.9rem;
-          font-weight: 500;
-          border-radius: 8px;
-          transition: all 0.2s;
+          padding: 10px 0;
+          border-bottom: 1px solid var(--app-rule);
+          display: block;
           background: none;
-          border: none;
-          cursor: pointer;
+          border-left: none;
+          border-right: none;
+          border-top: none;
           text-align: left;
-          font-family: "Inter", system-ui, sans-serif;
+          cursor: pointer;
         }
 
-        .tg-mobile-link:hover {
-          color: var(--text-primary);
-          background: var(--surface-glass-hover);
-        }
-
-        .tg-mobile-primary {
-          color: #fff;
-          background: linear-gradient(135deg, #38bdf8, #6366f1);
-          font-weight: 700;
-          text-align: center;
+        .tg-mobile-auth-section {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
           margin-top: 8px;
-          border-radius: 999px;
+        }
+
+        .tg-mobile-cta {
+          width: 100%;
+          text-align: center;
+          padding: 12px;
+        }
+
+        .tg-logout-link {
+          color: var(--color-danger);
         }
 
         @media (max-width: 768px) {
           .tg-nav,
-          .tg-header-actions { display: none; }
-          .tg-mobile-toggle { display: block; }
-          .tg-mobile-menu { display: flex; }
+          .tg-header-actions {
+            display: none;
+          }
+          .tg-mobile-toggle {
+            display: block;
+          }
+          .tg-mobile-drawer {
+            display: flex;
+          }
         }
       `}</style>
     </header>
