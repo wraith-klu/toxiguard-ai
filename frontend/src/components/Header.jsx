@@ -1,12 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import ThemeToggle from "./ThemeToggle";
+import SandboxModal from "./SandboxModal";
 
 export default function Header({ onLogout, isDashboard = false }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [sandboxOpen, setSandboxOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const apiKey = localStorage.getItem("api_key");
@@ -88,6 +90,13 @@ export default function Header({ onLogout, isDashboard = false }) {
 
         {/* Desktop Navigation */}
         <nav className="tg-nav">
+          <button
+            type="button"
+            className="tg-nav-link tg-sandbox-btn"
+            onClick={() => setSandboxOpen(true)}
+          >
+            <span className="tg-sandbox-spark">⚡</span> Sandbox
+          </button>
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -101,6 +110,14 @@ export default function Header({ onLogout, isDashboard = false }) {
 
         {/* Header Right Actions */}
         <div className="tg-header-actions">
+          <button
+            type="button"
+            className="tg-sandbox-pill-btn"
+            onClick={() => setSandboxOpen(true)}
+            title="Open Interactive Model Sandbox"
+          >
+            ⚡ Test Model
+          </button>
           <ThemeToggle />
 
           {apiKey ? (
@@ -242,8 +259,22 @@ export default function Header({ onLogout, isDashboard = false }) {
               </Link>
             </div>
           )}
+
+          <button
+            type="button"
+            className="tg-mobile-nav-link tg-sandbox-mobile-btn"
+            onClick={() => {
+              setMobileOpen(false);
+              setSandboxOpen(true);
+            }}
+          >
+            ⚡ Open Interactive Model Sandbox
+          </button>
         </div>
       )}
+
+      {/* Interactive Sandbox Modal */}
+      <SandboxModal isOpen={sandboxOpen} onClose={() => setSandboxOpen(false)} />
 
       <style>{`
         .tg-header {
@@ -320,9 +351,47 @@ export default function Header({ onLogout, isDashboard = false }) {
           background: var(--app-surface);
         }
 
-        .tg-nav-link.active {
-          color: var(--app-ink);
-          font-weight: 600;
+        .tg-sandbox-btn {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .tg-sandbox-spark {
+          color: #f59e0b;
+        }
+
+        .tg-sandbox-pill-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: var(--font-sans);
+          font-size: 0.775rem;
+          font-weight: 700;
+          color: #3b82f6;
+          background: rgba(59, 130, 246, 0.12);
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          border-radius: 6px;
+          padding: 5px 10px;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+        }
+
+        .tg-sandbox-pill-btn:hover {
+          background: rgba(59, 130, 246, 0.22);
+          border-color: #3b82f6;
+          transform: translateY(-1px);
+        }
+
+        .tg-sandbox-mobile-btn {
+          background: rgba(59, 130, 246, 0.1) !important;
+          color: #3b82f6 !important;
+          border-radius: 6px !important;
+          padding: 10px 12px !important;
+          font-weight: 600 !important;
         }
 
         .tg-header-actions {

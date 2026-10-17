@@ -13,6 +13,15 @@ export default defineConfig({
 
   build: {
     outDir: "dist",
-    sourcemap: true
-  }
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-charts": ["recharts"],
+          "vendor-ui": ["framer-motion", "lucide-react"],
+        },
+      },
+    },
+  },
 });
