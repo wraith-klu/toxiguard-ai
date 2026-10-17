@@ -16,6 +16,7 @@ import ParticleBackground from "../components/ParticleBackground";
 import CompareMode from "../components/CompareMode";
 import MonitoringDashboard from "../components/MonitoringDashboard";
 import StreamAnalyzer from "../components/StreamAnalyzer";
+import ApiKeyAndWebhookManager from "../components/ApiKeyAndWebhookManager";
 
 import "../styles.css";
 
@@ -161,6 +162,7 @@ export default function Dashboard() {
     { id: "batch",      label: "Batch Upload" },
     { id: "stream",     label: "⚡ Live Stream" },
     { id: "monitoring", label: "📊 Monitoring" },
+    { id: "apikeys",    label: "🔑 API Keys & Webhooks" },
     { id: "history",    label: "History" },
   ];
 
@@ -266,6 +268,9 @@ export default function Dashboard() {
 
         {/* Monitoring Tab */}
         {activeTab === "monitoring" && <MonitoringDashboard />}
+
+        {/* API Keys & Webhooks Tab */}
+        {activeTab === "apikeys" && <ApiKeyAndWebhookManager />}
 
         {/* History Tab */}
         {activeTab === "history" && (
