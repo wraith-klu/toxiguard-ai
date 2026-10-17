@@ -42,7 +42,7 @@ export default function Header({ onLogout, isDashboard = false }) {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
-  
+
   const userName = email ? getUsernameFromEmail(email) : "";
 
   const handleDropdownLogout = () => {

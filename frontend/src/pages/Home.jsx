@@ -409,6 +409,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= IN ACTION: 3 SHOWCASE PICS & DETAILS ================= */}
+      <section className="showcase-section">
+        <div className="section-container">
+          <div className="section-header-block">
+            <span className="category-pill">In Action</span>
+            <h2 className="section-title">See ToxiGuard in Action</h2>
+            <p className="section-summary">
+              Experience how ToxiGuard seamlessly integrates and protects your digital spaces across feeds, extensions, and telemetry consoles.
+            </p>
+          </div>
+
+          <div className="showcase-container">
+            {/* Item 1 */}
+            <div className="showcase-row">
+              <div className="showcase-text">
+                <h3>Context-Aware Detection</h3>
+                <p>
+                  Our AI doesn't just look for bad words. It understands the nuances of human language.
+                  Sarcasm, slang, and cultural contexts are processed to ensure accurate moderation without
+                  stifling genuine expression.
+                </p>
+                <ul className="showcase-list">
+                  <li><span className="check-icon">✓</span> Semantic analysis via LLMs</li>
+                  <li><span className="check-icon">✓</span> Bypasses common obfuscation</li>
+                  <li><span className="check-icon">✓</span> Explains why content was flagged</li>
+                </ul>
+              </div>
+              <div className="showcase-image-wrapper">
+                <img src="/toxi3.jpg" alt="Context Aware Detection" className="showcase-image float-hover" />
+                <div className="showcase-glow" />
+              </div>
+            </div>
+
+            {/* Item 2 */}
+            <div className="showcase-row reverse">
+              <div className="showcase-text">
+                <h3>Real-Time Extension Integration</h3>
+                <p>
+                  Moderate directly in your browser. Our lightweight Chrome extension seamlessly integrates
+                  with your favorite platforms like Instagram, Twitter, and Facebook to filter toxicity
+                  before you even see it.
+                </p>
+                <ul className="showcase-list">
+                  <li><span className="check-icon">✓</span> Zero-configuration setup</li>
+                  <li><span className="check-icon">✓</span> Sub-second processing</li>
+                  <li><span className="check-icon">✓</span> Custom filter thresholds</li>
+                </ul>
+              </div>
+              <div className="showcase-image-wrapper">
+                <img src="/toxi2.jpg" alt="Extension Integration" className="showcase-image float-hover" />
+                <div className="showcase-glow" />
+              </div>
+            </div>
+
+            {/* Item 3 */}
+            <div className="showcase-row">
+              <div className="showcase-text">
+                <h3>Comprehensive Dashboard Analytics</h3>
+                <p>
+                  Get granular insights into the health of your community. Track toxicity trends,
+                  identify repeated offenders, and adjust your moderation strategy with powerful,
+                  easy-to-read analytics.
+                </p>
+                <ul className="showcase-list">
+                  <li><span className="check-icon">✓</span> Real-time sentiment metrics</li>
+                  <li><span className="check-icon">✓</span> Exportable PDF reports</li>
+                  <li><span className="check-icon">✓</span> Multi-language breakdowns</li>
+                </ul>
+              </div>
+              <div className="showcase-image-wrapper">
+                <img src="/toxi5.jpg" alt="Dashboard Analytics" className="showcase-image float-hover" />
+                <div className="showcase-glow" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Technical Explanations Section */}
       <section className="faq-editorial-section">
         <div className="section-container">
