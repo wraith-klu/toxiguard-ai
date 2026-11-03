@@ -43,6 +43,28 @@ Get-ChildItem -Path $BackendDir -Recurse | Where-Object {
 
 Push-Location $TempDeployDir
 try {
+    # Generate Hugging Face Space Docker Frontmatter
+    $HFReadme = @"
+---
+title: ToxiGuard AI Backend
+emoji: 🛡️
+colorFrom: red
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
+# ToxiGuard AI — Backend Service
+Production FastAPI moderation backend powered by DeBERTa-v3 with ONNX Runtime.
+
+## API Documentation
+- Swagger UI: \`/docs\`
+- ReDoc: \`/redoc\`
+- Health: \`/health\`
+"@
+    Set-Content -Path (Join-Path $TempDeployDir "README.md") -Value $HFReadme -Encoding UTF8
+
     Write-Host "⚙️ Initializing Git LFS in Space..." -ForegroundColor Yellow
     git lfs install
     git lfs track "*.onnx" "*.joblib" "*.model"
