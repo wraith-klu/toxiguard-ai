@@ -20,6 +20,13 @@
   --app-bg:               #080c16;
   --app-surface:          #111726;
   --app-surface-hover:    #182035;
+  /* Legacy token compatibility aliases */
+  --bg-primary:           var(--app-bg);
+  --bg-surface:           var(--app-surface);
+  --text-primary:         var(--app-ink);
+  --text-secondary:       var(--app-ink-muted);
+  --text-tertiary:        var(--app-ink-subtle);
+  --border-color:         var(--app-rule);
   /* Ink */
   --app-ink:              #f8fafc;
   --app-ink-muted:        #cbd5e1;
@@ -79,6 +86,13 @@
   --app-bg:               #F4EFE8;
   --app-surface:          #EDE7DF;
   --app-surface-hover:    #E4DCD2;
+  /* Legacy token compatibility aliases */
+  --bg-primary:           var(--app-bg);
+  --bg-surface:           var(--app-surface);
+  --text-primary:         var(--app-ink);
+  --text-secondary:       var(--app-ink-muted);
+  --text-tertiary:        var(--app-ink-subtle);
+  --border-color:         var(--app-rule);
   /* Ink */
   --app-ink:              #1A1916;
   --app-ink-muted:        #3D3A35;

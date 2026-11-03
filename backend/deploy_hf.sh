@@ -37,7 +37,28 @@ rsync -av --progress "$SCRIPT_DIR/" "$TEMP_DIR/" \
     --exclude="toxiguard.db" \
     --exclude="*.log"
 
-# 4. Push to HF
+# 4. Generate Hugging Face Space Frontmatter
+cat << 'EOF' > "$TEMP_DIR/README.md"
+---
+title: ToxiGuard AI Backend
+emoji: 🛡️
+colorFrom: red
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
+# ToxiGuard AI — Backend Service
+Production FastAPI moderation backend powered by DeBERTa-v3 with ONNX Runtime.
+
+## API Documentation
+- Swagger UI: `/docs`
+- ReDoc: `/redoc`
+- Health: `/health`
+EOF
+
+# 5. Push to HF
 cd "$TEMP_DIR"
 git lfs install
 git lfs track "*.onnx" "*.joblib" "*.model"

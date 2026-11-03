@@ -335,92 +335,140 @@ export default function ApiKeyAndWebhookManager() {
         .mgr-container {
           display: flex;
           flex-direction: column;
+          gap: 24px;
         }
 
         .mgr-card {
-          padding: 24px;
-          border-radius: var(--radius-lg, 16px);
+          background: var(--app-surface) !important;
+          border: 1px solid var(--app-rule) !important;
+          border-radius: var(--radius-lg, 16px) !important;
+          box-shadow: var(--app-shadow-md) !important;
+          padding: 28px !important;
+          transform: none !important;
+        }
+
+        .mgr-card:hover {
+          transform: none !important;
+          box-shadow: var(--app-shadow-md) !important;
         }
 
         .mgr-card-header {
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
-          margin-bottom: 20px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-          padding-bottom: 14px;
+          margin-bottom: 24px;
+          border-bottom: 1px solid var(--app-rule);
+          padding-bottom: 16px;
+          gap: 16px;
         }
 
         .mgr-card-title {
-          font-size: 1.15rem;
-          color: var(--text-primary, #ffffff);
-          margin: 0 0 4px;
+          font-family: var(--font-serif, "DM Serif Display", serif);
+          font-size: 1.35rem;
+          color: var(--app-ink, #f8fafc);
+          margin: 0 0 6px;
           font-weight: 700;
+          letter-spacing: -0.01em;
         }
 
         .mgr-card-subtitle {
-          font-size: 0.825rem;
-          color: var(--text-tertiary, #94a3b8);
+          font-family: var(--font-sans);
+          font-size: 0.875rem;
+          color: var(--app-ink-subtle, #94a3b8);
           margin: 0;
+          line-height: 1.45;
         }
 
         .mgr-badge {
-          font-size: 0.725rem;
-          background: rgba(59, 130, 246, 0.15);
-          color: #3b82f6;
-          border: 1px solid rgba(59, 130, 246, 0.3);
-          padding: 4px 10px;
-          border-radius: 6px;
+          font-size: 0.75rem;
+          background: var(--app-accent-soft);
+          color: var(--app-accent);
+          border: 1px solid var(--app-accent);
+          padding: 4px 12px;
+          border-radius: var(--radius-full, 999px);
           font-weight: 600;
+          white-space: nowrap;
+          letter-spacing: 0.02em;
         }
 
         .mgr-badge-purple {
-          font-size: 0.725rem;
-          background: rgba(168, 85, 247, 0.15);
-          color: #c084fc;
+          font-size: 0.75rem;
+          background: rgba(168, 85, 247, 0.12);
+          color: #7c3aed;
           border: 1px solid rgba(168, 85, 247, 0.3);
-          padding: 4px 10px;
-          border-radius: 6px;
+          padding: 4px 12px;
+          border-radius: var(--radius-full, 999px);
           font-weight: 600;
+          white-space: nowrap;
+          letter-spacing: 0.02em;
+        }
+
+        [data-theme="dark"] .mgr-badge-purple {
+          color: #c084fc;
+          border-color: rgba(168, 85, 247, 0.4);
         }
 
         .mgr-key-form {
           display: grid;
           grid-template-columns: 2fr 1.5fr auto;
           gap: 12px;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .mgr-input, .mgr-select {
-          background: rgba(0, 0, 0, 0.3);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          color: var(--text-primary, #ffffff);
-          border-radius: 8px;
-          padding: 10px 14px;
+          background: var(--app-bg, #080c16);
+          border: 1px solid var(--app-rule, rgba(255, 255, 255, 0.12));
+          color: var(--app-ink, #f8fafc);
+          border-radius: var(--radius-sm, 8px);
+          padding: 11px 16px;
+          font-family: var(--font-sans);
           font-size: 0.875rem;
           outline: none;
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .mgr-input::placeholder {
+          color: var(--app-ink-subtle, #94a3b8);
+          opacity: 0.7;
         }
 
         .mgr-input:focus, .mgr-select:focus {
-          border-color: #3b82f6;
+          border-color: var(--app-accent, #e07a38);
+          box-shadow: 0 0 0 3px var(--app-accent-soft);
+        }
+
+        .mgr-select {
+          cursor: pointer;
         }
 
         .mgr-select option {
-          background: #0f172a;
-          color: #ffffff;
+          background: var(--app-surface, #111726);
+          color: var(--app-ink, #f8fafc);
         }
 
         .mgr-generate-btn {
           white-space: nowrap;
-          padding: 10px 18px;
+          padding: 11px 22px;
+          background: var(--app-accent, #e07a38);
+          color: #ffffff;
+          font-weight: 600;
+          border: none;
+          border-radius: var(--radius-sm, 8px);
+          cursor: pointer;
+          transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .mgr-generate-btn:hover {
+          background: var(--app-accent-hover, #ea8b4e);
+          transform: translateY(-1px);
         }
 
         .mgr-alert-banner {
-          background: rgba(245, 158, 11, 0.12);
-          border: 1px solid rgba(245, 158, 11, 0.3);
-          padding: 14px 18px;
-          border-radius: 10px;
-          margin-bottom: 20px;
+          background: var(--color-warn-soft, rgba(245, 158, 11, 0.12));
+          border: 1px solid var(--color-warn-border, rgba(245, 158, 11, 0.3));
+          padding: 16px 20px;
+          border-radius: var(--radius-md, 12px);
+          margin-bottom: 24px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -430,132 +478,186 @@ export default function ApiKeyAndWebhookManager() {
         .mgr-alert-content {
           display: flex;
           flex-direction: column;
-          gap: 4px;
-          font-size: 0.85rem;
-          color: #fbbf24;
+          gap: 6px;
+          font-size: 0.875rem;
+          color: var(--color-warn, #b45309);
         }
 
         .mgr-secret-key-text {
-          font-family: monospace;
-          background: rgba(0, 0, 0, 0.4);
-          padding: 4px 8px;
-          border-radius: 4px;
-          color: #ffffff;
+          font-family: var(--font-mono, monospace);
+          font-size: 0.85rem;
+          background: var(--app-bg, #080c16);
+          border: 1px dashed var(--app-rule);
+          padding: 6px 10px;
+          border-radius: 6px;
+          color: var(--app-ink, #f8fafc);
           user-select: all;
+          display: inline-block;
         }
 
         .mgr-alert-actions {
           display: flex;
-          gap: 8px;
+          gap: 10px;
         }
 
         .mgr-copy-btn {
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          color: #ffffff;
-          border-radius: 6px;
-          padding: 6px 12px;
-          font-size: 0.8rem;
+          background: var(--app-surface);
+          border: 1px solid var(--app-rule);
+          color: var(--app-ink);
+          border-radius: var(--radius-sm, 6px);
+          padding: 8px 14px;
+          font-size: 0.825rem;
+          font-weight: 600;
           cursor: pointer;
+          transition: background var(--transition-fast), border-color var(--transition-fast);
         }
 
         .mgr-copy-btn:hover {
-          background: rgba(255, 255, 255, 0.2);
+          background: var(--app-surface-hover);
+          border-color: var(--app-accent);
+          color: var(--app-accent);
         }
 
         .mgr-dismiss-btn {
           background: transparent;
-          border: none;
-          color: var(--text-tertiary, #94a3b8);
-          font-size: 0.8rem;
+          border: 1px solid transparent;
+          color: var(--app-ink-subtle);
+          font-size: 0.825rem;
+          font-weight: 500;
+          padding: 8px 12px;
           cursor: pointer;
+          transition: color var(--transition-fast);
+        }
+
+        .mgr-dismiss-btn:hover {
+          color: var(--app-ink);
         }
 
         .mgr-table-wrapper {
           overflow-x: auto;
+          border: 1px solid var(--app-rule);
+          border-radius: var(--radius-md, 12px);
+          background: var(--app-surface);
         }
 
         .mgr-table {
           width: 100%;
           border-collapse: collapse;
           text-align: left;
-          font-size: 0.85rem;
+          font-size: 0.875rem;
         }
 
         .mgr-table th {
-          padding: 10px 14px;
-          color: var(--text-tertiary, #94a3b8);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-          font-weight: 600;
+          padding: 12px 18px;
+          background: var(--app-bg);
+          color: var(--app-ink-subtle);
+          border-bottom: 1px solid var(--app-rule);
+          font-family: var(--font-sans);
+          font-weight: 700;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
         }
 
         .mgr-table td {
-          padding: 12px 14px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-          color: var(--text-secondary, #cbd5e1);
+          padding: 14px 18px;
+          border-bottom: 1px solid var(--app-rule);
+          color: var(--app-ink-muted);
+          vertical-align: middle;
+        }
+
+        .mgr-table tbody tr {
+          transition: background var(--transition-fast);
+        }
+
+        .mgr-table tbody tr:hover {
+          background: var(--app-surface-hover);
+        }
+
+        .mgr-table tbody tr:last-child td {
+          border-bottom: none;
         }
 
         .mgr-cell-strong {
-          color: var(--text-primary, #ffffff);
+          color: var(--app-ink, #f8fafc) !important;
           font-weight: 600;
+          font-size: 0.9rem;
         }
 
         .mgr-mono {
-          font-family: monospace;
+          font-family: var(--font-mono, monospace);
+          font-size: 0.825rem;
+          background: var(--app-bg);
+          border: 1px solid var(--app-rule);
+          padding: 3px 8px;
+          border-radius: 4px;
+          color: var(--app-ink-muted);
         }
 
         .mgr-scope-tag {
-          font-size: 0.725rem;
-          padding: 3px 8px;
-          border-radius: 4px;
+          font-size: 0.75rem;
+          padding: 3px 10px;
+          border-radius: var(--radius-full, 999px);
           font-weight: 600;
+          display: inline-block;
         }
 
         .mgr-scope-tag.moderation-write {
-          background: rgba(16, 185, 129, 0.15);
-          color: #10b981;
+          background: var(--color-success-soft);
+          color: var(--color-success);
+          border: 1px solid var(--color-success-border);
         }
 
         .mgr-scope-tag.read-only {
-          background: rgba(59, 130, 246, 0.15);
-          color: #3b82f6;
+          background: var(--color-info-soft);
+          color: var(--color-info);
+          border: 1px solid var(--color-info-border);
         }
 
         .mgr-scope-tag.analytics {
-          background: rgba(168, 85, 247, 0.15);
+          background: rgba(168, 85, 247, 0.12);
+          color: #7c3aed;
+          border: 1px solid rgba(168, 85, 247, 0.25);
+        }
+
+        [data-theme="dark"] .mgr-scope-tag.analytics {
           color: #c084fc;
+          border-color: rgba(168, 85, 247, 0.4);
         }
 
         .mgr-revoke-btn {
-          background: rgba(239, 68, 68, 0.12);
-          border: 1px solid rgba(239, 68, 68, 0.3);
-          color: #f87171;
-          padding: 4px 10px;
-          border-radius: 6px;
+          background: var(--color-danger-soft);
+          border: 1px solid var(--color-danger-border);
+          color: var(--color-danger);
+          padding: 5px 12px;
+          border-radius: var(--radius-sm, 6px);
           font-size: 0.775rem;
+          font-weight: 600;
           cursor: pointer;
+          transition: all 0.2s ease;
         }
 
         .mgr-revoke-btn:hover {
-          background: rgba(239, 68, 68, 0.25);
+          background: var(--color-danger);
+          color: #ffffff;
         }
 
         .mgr-webhook-form {
           display: flex;
           flex-direction: column;
-          gap: 16px;
-          max-width: 640px;
+          gap: 18px;
+          max-width: 680px;
         }
 
         .mgr-form-row {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 8px;
         }
 
         .mgr-label {
-          font-size: 0.8rem;
-          color: var(--text-tertiary, #94a3b8);
+          font-size: 0.85rem;
+          color: var(--app-ink);
           font-weight: 600;
         }
 
@@ -571,84 +673,117 @@ export default function ApiKeyAndWebhookManager() {
         .mgr-events-checkboxes {
           display: flex;
           flex-direction: column;
-          gap: 8px;
-          background: rgba(0, 0, 0, 0.2);
-          padding: 12px;
-          border-radius: 8px;
+          gap: 10px;
+          background: var(--app-bg);
+          border: 1px solid var(--app-rule);
+          padding: 14px 18px;
+          border-radius: var(--radius-sm, 8px);
         }
 
         .mgr-event-check {
           display: flex;
           align-items: center;
           gap: 10px;
-          font-size: 0.85rem;
-          color: var(--text-primary, #ffffff);
+          font-size: 0.875rem;
+          color: var(--app-ink);
+          cursor: pointer;
+          font-weight: 500;
+        }
+
+        .mgr-event-check input[type="checkbox"] {
+          accent-color: var(--app-accent);
+          width: 16px;
+          height: 16px;
           cursor: pointer;
         }
 
         .mgr-dispatch-btn {
           align-self: flex-start;
-          margin-top: 6px;
+          margin-top: 8px;
+          background: var(--app-accent);
+          color: #ffffff;
+          font-weight: 600;
+          padding: 11px 22px;
+          border: none;
+          border-radius: var(--radius-sm, 8px);
+          cursor: pointer;
+          transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .mgr-dispatch-btn:hover:not(:disabled) {
+          background: var(--app-accent-hover);
+          transform: translateY(-1px);
+        }
+
+        .mgr-dispatch-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
 
         .mgr-log-section {
-          margin-top: 24px;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          padding-top: 16px;
+          margin-top: 28px;
+          border-top: 1px solid var(--app-rule);
+          padding-top: 20px;
         }
 
         .mgr-log-title {
-          font-size: 0.95rem;
-          color: var(--text-primary, #ffffff);
-          margin: 0 0 12px;
+          font-family: var(--font-serif, "DM Serif Display", serif);
+          font-size: 1.15rem;
+          color: var(--app-ink);
+          margin: 0 0 14px;
+          font-weight: 700;
         }
 
         .mgr-log-list {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 14px;
         }
 
         .mgr-log-card {
-          background: rgba(0, 0, 0, 0.35);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 8px;
-          padding: 12px;
+          background: var(--app-bg);
+          border: 1px solid var(--app-rule);
+          border-radius: var(--radius-sm, 8px);
+          padding: 14px 18px;
         }
 
         .mgr-log-meta {
           display: flex;
           align-items: center;
-          gap: 10px;
-          margin-bottom: 8px;
-          font-size: 0.8rem;
+          gap: 12px;
+          margin-bottom: 10px;
+          font-size: 0.825rem;
         }
 
         .mgr-log-status {
-          background: rgba(16, 185, 129, 0.2);
-          color: #34d399;
-          padding: 2px 6px;
+          background: var(--color-success-soft);
+          color: var(--color-success);
+          border: 1px solid var(--color-success-border);
+          padding: 2px 8px;
           border-radius: 4px;
           font-weight: 700;
+          font-size: 0.75rem;
         }
 
         .mgr-log-event {
-          color: var(--text-primary, #ffffff);
+          color: var(--app-ink);
           font-weight: 600;
         }
 
         .mgr-log-time {
-          color: var(--text-tertiary, #94a3b8);
+          color: var(--app-ink-subtle);
           margin-left: auto;
+          font-size: 0.8rem;
         }
 
         .mgr-log-payload {
           margin: 0;
-          font-size: 0.75rem;
-          background: rgba(0, 0, 0, 0.4);
-          padding: 10px;
-          border-radius: 6px;
-          color: #94a3b8;
+          font-size: 0.8rem;
+          background: var(--app-surface);
+          border: 1px solid var(--app-rule);
+          padding: 12px 14px;
+          border-radius: var(--radius-sm, 6px);
+          color: var(--app-ink-muted);
           max-height: 180px;
           overflow-y: auto;
         }

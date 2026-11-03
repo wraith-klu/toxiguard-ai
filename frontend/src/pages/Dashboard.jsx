@@ -287,41 +287,45 @@ export default function Dashboard() {
       <style>{`
         .dashboard-layout {
           min-height: 100vh;
-          background: var(--bg-primary);
+          background: var(--app-bg, #080c16);
+          color: var(--app-ink, #f8fafc);
         }
 
         .dash-tabs {
           display: flex;
-          gap: 4px;
-          padding: 4px;
-          background: rgba(255, 255, 255, 0.03);
-          border-radius: var(--radius-md);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          gap: 6px;
+          padding: 6px;
+          background: var(--app-surface, #111726);
+          border-radius: var(--radius-md, 12px);
+          border: 1px solid var(--app-rule, rgba(255, 255, 255, 0.09));
+          box-shadow: var(--app-shadow-sm);
         }
 
         .dash-tab {
           flex: 1;
-          padding: 10px 20px;
-          border: none;
+          padding: 10px 18px;
+          border: 1px solid transparent;
           background: transparent;
-          color: var(--text-tertiary);
-          font-family: var(--font-heading);
+          color: var(--app-ink-subtle, #94a3b8);
+          font-family: var(--font-sans, system-ui, sans-serif);
           font-weight: 600;
-          font-size: 0.85rem;
-          border-radius: 10px;
+          font-size: 0.875rem;
+          border-radius: var(--radius-sm, 8px);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all var(--transition-fast, 0.15s ease);
         }
 
         .dash-tab:hover {
-          color: var(--text-secondary);
-          background: rgba(255, 255, 255, 0.03);
+          color: var(--app-ink, #f8fafc);
+          background: var(--app-surface-hover, rgba(255, 255, 255, 0.05));
         }
 
         .dash-tab.active {
-          color: var(--text-primary);
-          background: rgba(56, 189, 248, 0.1);
-          box-shadow: 0 0 12px rgba(56, 189, 248, 0.1);
+          color: var(--app-accent, #e07a38);
+          background: var(--app-bg, #080c16);
+          border-color: var(--app-rule, rgba(255, 255, 255, 0.09));
+          box-shadow: var(--app-shadow-sm);
+          font-weight: 700;
         }
       `}</style>
     </div>
