@@ -171,7 +171,10 @@ Unlike standard BERT and RoBERTa, which sum token word embeddings with position 
 The cross-attention attention weight $A_{i,j}$ computes over **4 disentangled matrices**:
 
 $$
-A_{i,j} = \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{content-to-content}} + \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_{k,r}^T \mathbf{p}_{i|j}^T}_{\text{content-to-position}} + \underbrace{\mathbf{p}_{j|i} \mathbf{W}_{q,r} \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{position-to-content}} + \underbrace{\mathbf{p}_{i|j} \mathbf{W}_{q,r} \mathbf{W}_{k,r}^T \mathbf{p}_{j|i}^T}_{\text{position-to-position}}
+\begin{aligned}
+A_{i,j} &= \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{content-to-content}} + \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_{k,r}^T \mathbf{p}_{i|j}^T}_{\text{content-to-position}} \\
+        &+ \underbrace{\mathbf{p}_{j|i} \mathbf{W}_{q,r} \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{position-to-content}} + \underbrace{\mathbf{p}_{i|j} \mathbf{W}_{q,r} \mathbf{W}_{k,r}^T \mathbf{p}_{j|i}^T}_{\text{position-to-position}}
+\end{aligned}
 $$
 
 ```mermaid
@@ -211,7 +214,7 @@ DeBERTa-v3 integrates **absolute word positions** directly into the final projec
 Toxicity categories are not mutually exclusive. ToxiGuard evaluates 6 independent labels:
 
 $$
-\mathcal{C} = \{\text{toxic},\ \text{severe\_toxic},\ \text{obscene},\ \text{threat},\ \text{insult},\ \text{identity\_hate}\}
+\mathcal{C} = \{\text{toxic},\ \text{severe toxic},\ \text{obscene},\ \text{threat},\ \text{insult},\ \text{identity hate}\}
 $$
 
 Each logit $z_k$ maps to probability through an independent Sigmoid:
