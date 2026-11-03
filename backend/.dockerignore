@@ -1,0 +1,19 @@
+# Docker build ignore file
+venv/
+.venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+tests/
+.git/
+.gitignore
+.gitattributes
+toxiguard.db
+*.db-journal
+*.log
+.DS_Store
+Thumbs.db
