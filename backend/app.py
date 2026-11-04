@@ -86,6 +86,7 @@ demo = gr.Interface(
         ["Stop talking before I find where you live and hurt you."],
         ["I hate this stupid policy, but I understand why it was made."]
     ],
+    cache_examples=False,
 )
 
 # Mount Gradio onto the existing FastAPI application
