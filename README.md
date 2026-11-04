@@ -168,14 +168,14 @@ Unlike standard BERT and RoBERTa, which sum token word embeddings with position 
 - $\mathbf{c}_i \in \mathbb{R}^d$: Content vector representing semantic vocabulary meaning.
 - $\mathbf{p}_{i|j} \in \mathbb{R}^d$: Relative distance vector between token $i$ and token $j$.
 
-The cross-attention attention weight $A_{i,j}$ computes over **4 disentangled matrices**:
+The cross-attention weight $A_{i,j}$ computes over **4 disentangled matrices**:
 
-$$
-\begin{aligned}
-A_{i,j} &= \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{content-to-content}} + \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_{k,r}^T \mathbf{p}_{i|j}^T}_{\text{content-to-position}} \\
-        &+ \underbrace{\mathbf{p}_{j|i} \mathbf{W}_{q,r} \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{position-to-content}} + \underbrace{\mathbf{p}_{i|j} \mathbf{W}_{q,r} \mathbf{W}_{k,r}^T \mathbf{p}_{j|i}^T}_{\text{position-to-position}}
-\end{aligned}
-$$
+```math
+A_{i,j} = \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{content-to-content}}
+         + \underbrace{\mathbf{c}_i \mathbf{W}_q \mathbf{W}_{k,r}^T \mathbf{p}_{i|j}^T}_{\text{content-to-position}}
+         + \underbrace{\mathbf{p}_{j|i} \mathbf{W}_{q,r} \mathbf{W}_k^T \mathbf{c}_j^T}_{\text{position-to-content}}
+         + \underbrace{\mathbf{p}_{i|j} \mathbf{W}_{q,r} \mathbf{W}_{k,r}^T \mathbf{p}_{j|i}^T}_{\text{position-to-position}}
+```
 
 ```mermaid
 flowchart LR
