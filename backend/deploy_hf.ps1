@@ -31,15 +31,12 @@ Write-Host "📁 Cloning Space repo to temporary staging directory..." -Foregrou
 git clone $SpaceUrl $TempDeployDir
 
 Write-Host "📦 Staging backend files into Space..." -ForegroundColor Yellow
-# Copy necessary backend files, ignoring virtual environments and logs
-$ExcludeDirs = @("venv", ".venv", "__pycache__", ".pytest_cache", "tests")
-Get-ChildItem -Path $BackendDir -Recurse | Where-Object {
-    $item = $_
-    -not ($ExcludeDirs | Where-Object { $item.FullName -match "\\$_(\\|$)" })
-} | Copy-Item -Destination {
-    $rel = $_.FullName.Substring($BackendDir.Length)
-    Join-Path $TempDeployDir $rel
-} -Force
+    # Robust copy excluding local virtual environments, secrets, databases, and deployment scripts
+    robocopy $BackendDir $TempDeployDir /E /XD venv .venv __pycache__ .pytest_cache tests .git /XF .env toxiguard.db *.log *.pyc deploy_hf.ps1 deploy_hf.sh deploy_oracle.sh | Out-Null
+    if ($LASTEXITCODE -ge 8) {
+        Write-Error "File staging failed with robocopy code $LASTEXITCODE"
+        exit 1
+    }
 
 Push-Location $TempDeployDir
 try {

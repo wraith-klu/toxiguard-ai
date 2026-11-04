@@ -34,7 +34,11 @@ rsync -av --progress "$SCRIPT_DIR/" "$TEMP_DIR/" \
     --exclude="__pycache__" \
     --exclude=".pytest_cache" \
     --exclude="tests" \
+    --exclude=".env" \
     --exclude="toxiguard.db" \
+    --exclude="deploy_hf.*" \
+    --exclude="deploy_oracle.sh" \
+    --exclude=".git" \
     --exclude="*.log"
 
 # 4. Generate Hugging Face Space Frontmatter
