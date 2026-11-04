@@ -114,47 +114,29 @@ try {
 
 
 
+    $emoji = [char]::ConvertFromUtf32(0x1F6E1)
     $lines = @(
-
         '---',
-
         'title: ToxiGuard AI Backend',
-
-        'emoji: shield',
-
+        ('emoji: ' + $emoji),
         'colorFrom: red',
-
         'colorTo: indigo',
-
         'sdk: gradio',
-
         'app_file: app.py',
-
         'pinned: false',
-
         '---',
-
         '',
-
         '# ToxiGuard AI - Content Moderation Platform',
-
         'Production FastAPI moderation backend powered by DeBERTa-v3 with ONNX Runtime.',
-
         '',
-
         '## API Documentation',
-
         '- Swagger UI: /docs',
-
         '- ReDoc: /redoc',
-
         '- Health: /health'
-
     )
-
     $HFReadme = $lines -join [System.Environment]::NewLine
-
-    [System.IO.File]::WriteAllText((Join-Path $TempDeployDir "README.md"), $HFReadme, [System.Text.Encoding]::UTF8)
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText((Join-Path $TempDeployDir "README.md"), $HFReadme, $utf8NoBom)
 
 
 
