@@ -10,11 +10,20 @@ import sys
 # Ensure backend root is in Python module search path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# Handle Hugging Face ZeroGPU environment if active
+try:
+    import spaces
+    gpu_decorator = spaces.GPU
+except Exception:
+    def gpu_decorator(fn):
+        return fn
+
 import gradio as gr
 from app.main import app as fastapi_app
 from app.services.model_service import model_service
 
 
+@gpu_decorator
 def analyze_toxicity(text: str):
     """Interactive demo function for the Gradio UI."""
     if not text or not text.strip():
@@ -61,7 +70,6 @@ demo = gr.Interface(
         ["Stop talking before I find where you live and hurt you."],
         ["I hate this stupid policy, but I understand why it was made."]
     ],
-    theme="soft",
 )
 
 # Mount Gradio onto the existing FastAPI application
