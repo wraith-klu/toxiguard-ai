@@ -14,11 +14,7 @@ param (
 
 )
 
-
-
 $ErrorActionPreference = "Stop"
-
-
 
 Write-Host ""
 
@@ -29,8 +25,6 @@ Write-Host "   ToxiGuard AI - Hugging Face Deployment Helper          " -Foregro
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 Write-Host ""
-
-
 
 try {
 
@@ -43,8 +37,6 @@ try {
     exit 1
 
 }
-
-
 
 $PushUrl = $SpaceUrl.Trim()
 
@@ -66,13 +58,9 @@ if ($Token -and $Token.Trim()) {
 
 }
 
-
-
 $BackendDir = $PSScriptRoot
 
 $TempDeployDir = Join-Path $env:TEMP ("toxiguard_hf_" + [System.Guid]::NewGuid().ToString().Substring(0, 8))
-
-
 
 try {
 
@@ -86,8 +74,6 @@ try {
 
     $env:GIT_LFS_SKIP_SMUDGE = "0"
 
-
-
     if (-not (Test-Path $TempDeployDir)) {
 
         Write-Error "Failed to clone Space repository."
@@ -95,8 +81,6 @@ try {
         exit 1
 
     }
-
-
 
     Write-Host "[2/5] Staging backend files into Space..." -ForegroundColor Yellow
 
@@ -111,17 +95,11 @@ try {
 
     }
 
-
-
     Push-Location $TempDeployDir
-
-
 
     Write-Host "[3/5] Configuring production dependencies and Space metadata..." -ForegroundColor Yellow
 
     Copy-Item -Path (Join-Path $TempDeployDir "requirements-prod.txt") -Destination (Join-Path $TempDeployDir "requirements.txt") -Force
-
-
 
     $emoji = [char]::ConvertFromUtf32(0x1F6E1)
 
@@ -169,15 +147,11 @@ try {
 
     [System.IO.File]::WriteAllText((Join-Path $TempDeployDir "README.md"), $HFReadme, $utf8NoBom)
 
-
-
     Write-Host "[4/5] Initializing Git LFS tracking for ONNX and model weights..." -ForegroundColor Yellow
 
     git lfs install
 
     git lfs track "*.onnx" "*.joblib" "*.model"
-
-
 
     Write-Host "[5/5] Staging files, committing and pushing to Hugging Face..." -ForegroundColor Green
 
@@ -198,8 +172,6 @@ try {
         exit 1
 
     }
-
-
 
     Write-Host ""
 
