@@ -1,4 +1,4 @@
-# ToxiGuard AI Deployment Helper
+﻿# ToxiGuard AI Deployment Helper
 
 param (
 
@@ -116,6 +116,8 @@ try {
         'colorTo: indigo',
 
         'sdk: gradio',
+
+        'sdk_version: 5.29.0',
 
         'app_file: app.py',
 

@@ -1,15 +1,23 @@
 # ToxiGuard AI — Production Dependencies (Hugging Face Spaces & Cloud)
 # ==============================================================================
-# Modern compatible dependency specifications for zero-conflict builds with Gradio 6 / FastAPI.
+# Compatible with Gradio 6 / FastAPI / ZeroGPU free tier.
+#
+# NOTES:
+#   - `spaces` is NOT listed here — HF ZeroGPU pre-installs it in the container.
+#     Listing it causes version conflicts with the platform's internal pinning.
+#   - `gradio`  is NOT listed here — HF pre-installs the version matching sdk_version.
+#   - `torch`   IS listed here — ZeroGPU requires PyTorch to be present so that
+#     spaces can monkey-patch torch.cuda during startup.
 
-# Web Framework & Server
+# ── Web Framework & Server ────────────────────────────────────────────────────
 fastapi>=0.115.2
 uvicorn[standard]>=0.30.0
 pydantic[email]>=2.8.0
 email-validator>=2.2.0
 pydantic-settings>=2.4.0
+python-multipart>=0.0.18
 
-# Database & Security
+# ── Database & Security ───────────────────────────────────────────────────────
 sqlalchemy>=2.0.0
 passlib[bcrypt]>=1.7.4
 bcrypt>=4.0.1
@@ -17,9 +25,11 @@ python-jose[cryptography]>=3.3.0
 cryptography>=42.0.0
 slowapi>=0.1.9
 
-# Machine Learning, PyTorch & ZeroGPU (Hugging Face Spaces)
+# ── Machine Learning — PyTorch required by ZeroGPU spaces library ────────────
+# torch must be installed so `import spaces` can monkey-patch torch.cuda.
 torch>=2.0.0
-spaces>=0.28.0
+
+# ── ONNX Runtime & Transformers (DeBERTa inference engine) ───────────────────
 onnxruntime>=1.19.0
 transformers>=4.48.0
 tokenizers>=0.20.0
@@ -29,16 +39,15 @@ joblib>=1.4.0
 numpy>=1.26.0
 scipy>=1.13.0
 
-# NLP & Sentiment Preprocessing
+# ── NLP & Sentiment Preprocessing ────────────────────────────────────────────
 nltk>=3.9.0
 textblob>=0.18.0
 vaderSentiment>=3.3.2
 
-# LLM Fallback & Utils
+# ── LLM Fallback & Utilities ─────────────────────────────────────────────────
 openai>=1.50.0
 httpx>=0.27.0
 python-dotenv>=1.0.0
 pandas>=2.2.0
 aiofiles>=24.1.0
-python-multipart>=0.0.18
 loguru>=0.7.2
