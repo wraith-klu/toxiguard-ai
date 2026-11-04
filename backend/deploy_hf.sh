@@ -70,7 +70,8 @@ git lfs install
 git lfs track "*.onnx" "*.joblib" "*.model"
 git add .
 git commit -m "Deploy ToxiGuard backend to Hugging Face Spaces" || echo "No changes to commit."
-git push origin main
+git branch -M main
+git push origin main --force
 
 # Cleanup
 rm -rf "$TEMP_DIR"

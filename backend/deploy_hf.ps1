@@ -98,7 +98,8 @@ Production FastAPI moderation backend powered by DeBERTa-v3 with ONNX Runtime.
     Write-Host "      (Uploading 738 MB DeBERTa ONNX model via Git LFS, please wait...)" -ForegroundColor Cyan
     git add .
     git commit -m "Deploy ToxiGuard AI backend to Hugging Face Spaces"
-    git push origin main
+    git branch -M main
+    git push origin main --force
 
     Write-Host ""
     Write-Host "SUCCESS: ToxiGuard AI backend successfully deployed to Hugging Face Spaces!" -ForegroundColor Green
