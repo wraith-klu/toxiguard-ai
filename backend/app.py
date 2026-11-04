@@ -10,9 +10,10 @@ import sys
 # 1. Disable Gradio SSR Node proxy (prevents Errno 98 port 7860 collision)
 os.environ["GRADIO_SSR_MODE"] = "false"
 
-# 2. Hugging Face ZeroGPU initialization
+# 2. Hugging Face ZeroGPU initialization — spaces must precede torch
 try:
     import spaces  # pyrefly: ignore[missing-import] # type: ignore
+    import torch  # pyrefly: ignore[missing-import] # type: ignore
 except ImportError:
     class spaces:  # type: ignore
         @staticmethod
