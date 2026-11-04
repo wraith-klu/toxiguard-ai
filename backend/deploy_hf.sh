@@ -41,15 +41,17 @@ rsync -av --progress "$SCRIPT_DIR/" "$TEMP_DIR/" \
     --exclude=".git" \
     --exclude="*.log"
 
-# 4. Generate Hugging Face Space Frontmatter
+# 4. Use production requirements & generate Gradio Space frontmatter
+cp "$TEMP_DIR/requirements-prod.txt" "$TEMP_DIR/requirements.txt"
+
 cat << 'EOF' > "$TEMP_DIR/README.md"
 ---
 title: ToxiGuard AI Backend
 emoji: 🛡️
 colorFrom: red
 colorTo: indigo
-sdk: docker
-app_port: 7860
+sdk: gradio
+app_file: app.py
 pinned: false
 ---
 

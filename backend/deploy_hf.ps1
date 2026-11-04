@@ -40,25 +40,28 @@ Write-Host "📦 Staging backend files into Space..." -ForegroundColor Yellow
 
 Push-Location $TempDeployDir
 try {
-    # Generate Hugging Face Space Docker Frontmatter
+    # Use production requirements for lightweight ONNX runtime
+    Copy-Item -Path (Join-Path $TempDeployDir "requirements-prod.txt") -Destination (Join-Path $TempDeployDir "requirements.txt") -Force
+
+    # Generate Hugging Face Space Frontmatter (Gradio Free Tier)
     $HFReadme = @"
 ---
 title: ToxiGuard AI Backend
 emoji: 🛡️
 colorFrom: red
 colorTo: indigo
-sdk: docker
-app_port: 7860
+sdk: gradio
+app_file: app.py
 pinned: false
 ---
 
-# ToxiGuard AI — Backend Service
+# ToxiGuard AI — Content Moderation Platform
 Production FastAPI moderation backend powered by DeBERTa-v3 with ONNX Runtime.
 
 ## API Documentation
-- Swagger UI: \`/docs\`
-- ReDoc: \`/redoc\`
-- Health: \`/health\`
+- Swagger UI: `/docs`
+- ReDoc: `/redoc`
+- Health: `/health`
 "@
     Set-Content -Path (Join-Path $TempDeployDir "README.md") -Value $HFReadme -Encoding UTF8
 
