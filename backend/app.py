@@ -73,10 +73,5 @@ demo = gr.Interface(
 )
 
 # Mount Gradio onto the existing FastAPI application
-# FastAPI's routes (/docs, /health, /predict, etc.) take precedence.
+# Hugging Face Spaces natively serves this ASGI 'app' on port 7860.
 app = gr.mount_gradio_app(fastapi_app, demo, path="/")
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 7860))
-    uvicorn.run(app, host="0.0.0.0", port=port)
