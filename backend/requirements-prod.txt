@@ -1,104 +1,41 @@
-# ToxiGuard AI — Production Requirements (Oracle A1 / ARM64 / Docker)
-# =====================================================================
-# torch is intentionally EXCLUDED — ONNX Runtime handles all inference.
-# Set ONNX_ONLY=true in your environment or Docker Compose to enforce this.
-#
-# Used for: Oracle Cloud Ampere A1, Render, Railway, any ARM64/x86 VPS.
-# NOT for: local training, model export, or evaluation (use requirements.txt).
-#
-# Savings vs full requirements.txt:
-#   - ~2 GB smaller Docker image (no PyTorch)
-#   - ~60% faster pip install
-#   - ~2-3 GB less RAM at startup
+# ToxiGuard AI — Production Dependencies (Hugging Face Spaces & Cloud)
+# ==============================================================================
+# Modern compatible dependency specifications for zero-conflict builds with Gradio 6 / FastAPI.
 
-# ------------------------------------------------------------------
-# WEB FRAMEWORK & SERVER
-# ------------------------------------------------------------------
-fastapi>=0.115.2,<1.0.0
-uvicorn[standard]==0.30.6
-pydantic==2.12.5
-pydantic-core==2.41.5
+# Web Framework & Server
+fastapi>=0.115.2
+uvicorn[standard]>=0.30.0
+pydantic>=2.8.0
+pydantic-settings>=2.4.0
 
-# ------------------------------------------------------------------
-# DATABASE & ORM
-# ------------------------------------------------------------------
-sqlalchemy==2.0.32
-psycopg2-binary==2.9.9
-alembic==1.13.2
+# Database & Security
+sqlalchemy>=2.0.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.0.1
+python-jose[cryptography]>=3.3.0
+cryptography>=42.0.0
+slowapi>=0.1.9
 
-# ------------------------------------------------------------------
-# AUTHENTICATION & SECURITY
-# ------------------------------------------------------------------
-passlib[bcrypt]==1.7.4
-bcrypt==4.0.1
-python-jose[cryptography]==3.3.0
-cryptography==43.0.1
+# Machine Learning & ONNX Runtime (Inference Engine)
+onnxruntime>=1.19.0
+transformers>=4.48.0
+tokenizers>=0.20.0
+sentencepiece>=0.2.0
+scikit-learn>=1.5.0
+joblib>=1.4.0
+numpy>=1.26.0
+scipy>=1.13.0
 
-# ------------------------------------------------------------------
-# RATE LIMITING & MIDDLEWARE
-# ------------------------------------------------------------------
-slowapi==0.1.9
-limits==3.13.0
+# NLP & Sentiment Preprocessing
+nltk>=3.9.0
+textblob>=0.18.0
+vaderSentiment>=3.3.2
 
-# ------------------------------------------------------------------
-# MACHINE LEARNING — CORE CLASSIFIER
-# ------------------------------------------------------------------
-scikit-learn==1.7.2
-joblib==1.4.2
-numpy==1.26.4
-scipy==1.14.0
-
-# ------------------------------------------------------------------
-# MACHINE LEARNING — ONNX INFERENCE (no torch)
-# onnxruntime  — handles all DeBERTa inference via model.onnx
-# transformers — tokenizer only (AutoTokenizer, no model weights)
-# tokenizers   — Rust fast tokenizer backend
-# sentencepiece — DeBERTa-v3 SentencePiece tokenizer
-# ------------------------------------------------------------------
-onnxruntime==1.19.2
-transformers==4.44.2
-tokenizers==0.19.1
-sentencepiece==0.2.0
-# torch==2.4.1  <-- EXCLUDED: not needed at inference time
-
-# ------------------------------------------------------------------
-# NLP — TEXT PREPROCESSING & SENTIMENT
-# ------------------------------------------------------------------
-nltk==3.9.1
-textblob==0.18.0.post0
-vaderSentiment==3.3.2
-
-# ------------------------------------------------------------------
-# LLM INTEGRATION (OpenRouter / OpenAI-compatible API)
-# ------------------------------------------------------------------
-openai==1.51.0
-httpx==0.27.2
-
-# ------------------------------------------------------------------
-# ENVIRONMENT & CONFIGURATION
-# ------------------------------------------------------------------
-python-dotenv==1.0.1
-pydantic-settings==2.4.0
-
-# ------------------------------------------------------------------
-# DATA PROCESSING
-# ------------------------------------------------------------------
-pandas==2.2.2
-
-# ------------------------------------------------------------------
-# ASYNC & CONCURRENCY
-# ------------------------------------------------------------------
-anyio==4.4.0
-aiofiles==24.1.0
-
-# ------------------------------------------------------------------
-# PRODUCTION UTILITIES
-# ------------------------------------------------------------------
-gunicorn==23.0.0
-python-multipart>=0.0.18,<1.0.0
-email-validator==2.2.0
-
-# ------------------------------------------------------------------
-# LOGGING & MONITORING
-# ------------------------------------------------------------------
-loguru==0.7.2
+# LLM Fallback & Utils
+openai>=1.50.0
+httpx>=0.27.0
+python-dotenv>=1.0.0
+pandas>=2.2.0
+aiofiles>=24.1.0
+python-multipart>=0.0.18
+loguru>=0.7.2
