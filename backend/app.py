@@ -12,9 +12,9 @@ os.environ["GRADIO_SSR_MODE"] = "false"
 
 # 2. Hugging Face ZeroGPU initialization
 try:
-    import spaces
+    import spaces  # pyrefly: ignore[missing-import] # type: ignore
 except ImportError:
-    class spaces:
+    class spaces:  # type: ignore
         @staticmethod
         def GPU(fn=None, **kwargs):
             if fn is not None:
@@ -26,7 +26,7 @@ except ImportError:
 # Ensure backend root is in Python module search path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-import gradio as gr
+import gradio as gr  # pyrefly: ignore[missing-import] # type: ignore
 from app.main import app as fastapi_app
 from app.services.model_service import model_service
 

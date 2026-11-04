@@ -1,0 +1,7 @@
+# Pyrefly static type checker configuration for ToxiGuard AI
+ignore-missing-imports = [
+    "spaces",
+    "spaces.*",
+    "gradio",
+    "gradio.*",
+]

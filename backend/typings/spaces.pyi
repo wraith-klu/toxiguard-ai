@@ -1,0 +1,3 @@
+from typing import Any, Callable
+
+def GPU(fn: Any = None, **kwargs: Any) -> Any: ...
