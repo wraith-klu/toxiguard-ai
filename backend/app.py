@@ -10,12 +10,18 @@ import sys
 # 1. Disable Gradio SSR Node proxy (prevents Errno 98 port 7860 collision)
 os.environ["GRADIO_SSR_MODE"] = "false"
 
-# 2. Initialize ZeroGPU before importing any model libraries
+# 2. Hugging Face ZeroGPU initialization
 try:
     import spaces
-    has_spaces = True
 except ImportError:
-    has_spaces = False
+    class spaces:
+        @staticmethod
+        def GPU(fn=None, **kwargs):
+            if fn is not None:
+                return fn
+            def decorator(f):
+                return f
+            return decorator
 
 # Ensure backend root is in Python module search path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -25,41 +31,24 @@ from app.main import app as fastapi_app
 from app.services.model_service import model_service
 
 
-if has_spaces:
-    @spaces.GPU
-    def analyze_toxicity(text: str):
-        """Interactive demo function for the Gradio UI (GPU accelerated)."""
-        if not text or not text.strip():
-            return {"error": "Please enter text to analyze."}
-        try:
-            res = model_service.predict(text)
-            return {
-                "is_toxic": bool(res.get("is_toxic", False)),
-                "confidence": round(float(res.get("confidence", 0.0)), 4),
-                "primary_category": res.get("primary_category", "none"),
-                "severity": res.get("severity", "none"),
-                "model_used": res.get("model_used", "onnx-deberta"),
-                "scores": {k: round(float(v), 4) for k, v in res.get("scores", {}).items()}
-            }
-        except Exception as e:
-            return {"error": str(e)}
-else:
-    def analyze_toxicity(text: str):
-        """Interactive demo function for the Gradio UI (CPU inference)."""
-        if not text or not text.strip():
-            return {"error": "Please enter text to analyze."}
-        try:
-            res = model_service.predict(text)
-            return {
-                "is_toxic": bool(res.get("is_toxic", False)),
-                "confidence": round(float(res.get("confidence", 0.0)), 4),
-                "primary_category": res.get("primary_category", "none"),
-                "severity": res.get("severity", "none"),
-                "model_used": res.get("model_used", "onnx-deberta"),
-                "scores": {k: round(float(v), 4) for k, v in res.get("scores", {}).items()}
-            }
-        except Exception as e:
-            return {"error": str(e)}
+# Literal @spaces.GPU decorator required for ZeroGPU static AST scanner
+@spaces.GPU
+def analyze_toxicity(text: str):
+    """Interactive demo function for the Gradio UI."""
+    if not text or not text.strip():
+        return {"error": "Please enter text to analyze."}
+    try:
+        res = model_service.predict(text)
+        return {
+            "is_toxic": bool(res.get("is_toxic", False)),
+            "confidence": round(float(res.get("confidence", 0.0)), 4),
+            "primary_category": res.get("primary_category", "none"),
+            "severity": res.get("severity", "none"),
+            "model_used": res.get("model_used", "onnx-deberta"),
+            "scores": {k: round(float(v), 4) for k, v in res.get("scores", {}).items()}
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 
 # ─── Gradio Interface for the Space page ─────────────────────────────────────
