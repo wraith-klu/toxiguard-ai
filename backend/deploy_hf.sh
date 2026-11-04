@@ -36,6 +36,8 @@ rsync -av --progress "$SCRIPT_DIR/" "$TEMP_DIR/" \
     --exclude="tests" \
     --exclude=".env" \
     --exclude="toxiguard.db" \
+    --exclude="train.csv" \
+    --exclude="test.csv" \
     --exclude="deploy_hf.*" \
     --exclude="deploy_oracle.sh" \
     --exclude=".git" \
