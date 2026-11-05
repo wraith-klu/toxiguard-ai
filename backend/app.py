@@ -96,21 +96,10 @@ with gr.Blocks(title="ToxiGuard AI") as demo:
 
 
 # ── Attach FastAPI routes to Gradio's internal app ───────────────────────────────
-# demo.app is Gradio's internal Starlette/FastAPI ASGI app.
-# We mount the entire fastapi_app as a sub-application at "/api" and also
-# copy individual routes so /health, /docs, /predict, etc. work at root level.
-#
-# Strategy: mount fastapi_app as a sub-app on demo.app.
-# All existing routes become accessible under the Space URL directly.
+# Mount the entire FastAPI app as a sub-application at "/api" on Gradio's
+# internal Starlette app. All routes are accessible at /api/<route>.
+# e.g. /api/predict, /api/health, /api/docs
 demo.app.mount("/api", fastapi_app)
-
-# Also expose key routes at root level for backward compatibility.
-# Copy routes from fastapi_app onto demo.app (excludes Gradio's own routes).
-_gradio_paths = {r.path for r in demo.app.routes}
-for _route in fastapi_app.routes:
-    _path = getattr(_route, "path", None)
-    if _path and _path not in _gradio_paths and not _path.startswith("/gradio"):
-        demo.app.routes.append(_route)
 
 
 # ── HF Space entrypoint ──────────────────────────────────────────────────────────
