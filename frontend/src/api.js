@@ -1,7 +1,7 @@
 // ToxiGuard AI — API Client
 
 const BASE_URL =
-  import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+  import.meta.env.VITE_BACKEND_URL || "https://wraithklu-toxiguard-api.hf.space";
 
 // Shared fetch helper (API KEY BASED)
 

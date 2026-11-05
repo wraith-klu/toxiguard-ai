@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "../components/Toast";
 import "./Signup.css";
 
-const API = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_BACKEND_URL || "https://wraithklu-toxiguard-api.hf.space";
 
 export default function Signup() {
   const [email, setEmail] = useState("");

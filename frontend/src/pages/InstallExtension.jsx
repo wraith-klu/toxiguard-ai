@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "./InstallExtension.css";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://wraithklu-toxiguard-api.hf.space";
 
 export default function InstallExtension() {
   const navigate = useNavigate();

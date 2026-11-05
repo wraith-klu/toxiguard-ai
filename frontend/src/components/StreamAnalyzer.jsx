@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://wraithklu-toxiguard-api.hf.space";
 const WS_URL = BASE_URL.replace(/^http/, "ws");
 
 const SEVERITY_COLOR = {

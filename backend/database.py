@@ -1,6 +1,7 @@
 # database.py
 
 import os
+import tempfile
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
@@ -8,8 +9,17 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # ✅ load .env file
 load_dotenv()
 
-# ✅ fallback for local dev
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./toxiguard.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    try:
+        test_path = "./.write_test"
+        with open(test_path, "w") as f:
+            f.write("ok")
+        os.remove(test_path)
+        DATABASE_URL = "sqlite:///./toxiguard.db"
+    except Exception:
+        db_dir = os.environ.get("HF_HOME", tempfile.gettempdir())
+        DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'toxiguard.db')}"
 
 # Fix for Render (postgres)
 if DATABASE_URL.startswith("postgres://"):

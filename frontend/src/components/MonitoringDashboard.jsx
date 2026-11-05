@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from "recharts";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://wraithklu-toxiguard-api.hf.space";
 
 function apiFetch(path) {
   const apiKey = localStorage.getItem("api_key");

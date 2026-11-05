@@ -3,11 +3,11 @@ from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr, field_validator
 import secrets
+import bcrypt
 
 from database import get_db
 from models import User
 from auth_utils import create_access_token, generate_api_key
-from passlib.context import CryptContext
 
 # ──────────────────────────────────────────────────────────────────────────────
 # ROUTER
@@ -15,7 +15,6 @@ from passlib.context import CryptContext
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
@@ -45,11 +44,17 @@ class LoginRequest(BaseModel):
 # ──────────────────────────────────────────────────────────────────────────────
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    """Hash password using bcrypt directly."""
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    """Verify password against bcrypt hash."""
+    try:
+        return bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("utf-8"))
+    except Exception:
+        return False
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -59,26 +64,32 @@ def verify_password(plain: str, hashed: str) -> bool:
 @router.post("/signup", status_code=201)
 def signup(req: SignupRequest, db: Session = Depends(get_db)):
     """Register a new user and return their API key."""
-    existing = db.query(User).filter(User.email == req.email).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
+    try:
+        existing = db.query(User).filter(User.email == req.email).first()
+        if existing:
+            raise HTTPException(status_code=400, detail="Email already registered")
 
-    user = User(
-        email=req.email,
-        password_hash=hash_password(req.password),
-        api_key=generate_api_key(),
-        plan="free",
-        usage_count=0,
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+        user = User(
+            email=req.email,
+            password_hash=hash_password(req.password),
+            api_key=generate_api_key(),
+            plan="free",
+            usage_count=0,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
 
-    return {
-        "message": "Account created successfully",
-        "api_key": user.api_key,
-        "plan": user.plan,
-    }
+        return {
+            "message": "Account created successfully",
+            "api_key": user.api_key,
+            "plan": user.plan,
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database or server error: {exc!s}")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
