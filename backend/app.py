@@ -1,35 +1,31 @@
 """
-ToxiGuard AI — Hugging Face Space Entry Point (ZeroGPU + demo.launch())
-========================================================================
-Architecture:
-  - ZeroGPU requires demo.launch() as the entrypoint (NOT gr.mount_gradio_app
-    + uvicorn). The mount pattern bypasses ZeroGPU's post-startup scanner.
-  - FastAPI routes are attached to Gradio's internal app (demo.app) AFTER
-    the Blocks context, before launch. This preserves all API endpoints.
-  - HF Spaces runs: python app.py  →  demo.launch() blocks the process.
-
-ZeroGPU rules (never violate):
-  1. `import spaces` unconditional at module level.
-  2. `@spaces.GPU` literal decorator directly above the def.
-  3. `import spaces` before `import torch` and all ML libs.
-  4. analyze_toxicity bound DIRECTLY to btn.click(fn=analyze_toxicity).
-  5. No `class spaces:` or `spaces = ...` after the import.
-  6. `spaces` NOT in requirements.txt (HF pre-installs it).
-  7. `torch` MUST be in requirements.txt.
+ToxiGuard AI — Hugging Face Space Entry Point (ZeroGPU + FastAPI)
+==================================================================
+Integration Architecture:
+  1. `fastapi_app` is the primary ASGI application handling all REST endpoints:
+     /predict, /predict/demo, /predict/ml, /health, /docs, /auth/*, /explain, etc.
+  2. Gradio Blocks UI is mounted via `gr.mount_gradio_app(fastapi_app, demo, path="/")`
+  3. ZeroGPU compatibility:
+     - `import spaces` unconditionally at module top level.
+     - `@spaces.GPU` decorated function `analyze_toxicity` bound to Gradio event handlers.
+     - Explicit `spaces.zero.startup()` hook in __main__ tells the ZeroGPU broker
+       that the custom ASGI server is initialized, preventing startup shutdown.
 """
 
 import os
 import sys
 
+# Prevent port collision with Gradio's internal Node SSR proxy
+os.environ["GRADIO_SSR_MODE"] = "false"
+
 # ZeroGPU requirement: import spaces FIRST, unconditionally.
-# The static AST scanner and runtime hook both require this.
 import spaces  # type: ignore  # pyrefly: ignore[missing-import]
 
 # torch follows spaces (spaces monkey-patches torch.cuda for ZeroGPU)
 try:
     import torch  # type: ignore  # pyrefly: ignore[missing-import]
 except ImportError:
-    pass  # ONNX-only path — torch not strictly required for inference
+    pass
 
 # Backend package root on sys.path so `from app.xxx import ...` works
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -41,13 +37,10 @@ from app.services.model_service import model_service
 
 
 # ── @spaces.GPU inference function ──────────────────────────────────────────────
-# MUST be the literal `@spaces.GPU` decorator directly above the def.
-# ZeroGPU static AST scanner looks for exactly this pattern.
-# Also registered directly in btn.click / txt_in.submit so the runtime
-# Gradio-event-registry scanner finds it after startup.
+# Literal @spaces.GPU directly above def satisfies ZeroGPU's AST scanner and broker.
 @spaces.GPU
 def analyze_toxicity(text: str):
-    """ZeroGPU-accelerated toxicity analysis."""
+    """ZeroGPU-accelerated toxicity analysis for Gradio UI demo."""
     if not text or not text.strip():
         return {"error": "Please enter some text to analyse."}
     try:
@@ -71,7 +64,8 @@ with gr.Blocks(title="ToxiGuard AI") as demo:
     gr.Markdown(
         "# 🛡️ ToxiGuard AI — Content Moderation\n\n"
         "**DeBERTa-v3 · ONNX Runtime · Real-time multi-label toxicity detection**\n\n"
-        "🔗 **API Docs:** [/docs](/docs) · [/redoc](/redoc) · [/health](/health)"
+        "🔗 **API Docs:** [/docs](/docs) · [/redoc](/redoc) · [/health](/health) · "
+        "`POST /predict` · `POST /predict/demo`"
     )
     txt_in = gr.Textbox(
         lines=4,
@@ -90,72 +84,32 @@ with gr.Blocks(title="ToxiGuard AI") as demo:
         inputs=txt_in,
         cache_examples=False,
     )
-    # Direct binding — ZeroGPU runtime scanner checks these registrations.
+    # Direct binding for ZeroGPU handler scanner
     btn.click(fn=analyze_toxicity, inputs=txt_in, outputs=out)
     txt_in.submit(fn=analyze_toxicity, inputs=txt_in, outputs=out)
 
 
-# ── Attach FastAPI routes to Gradio's internal app ───────────────────────────────
-# demo.app is Gradio's internal FastAPI instance. By including all routers
-# directly via include_router(), FastAPI's routing table handles /predict,
-# /predict/demo, /health, etc. natively without routing conflicts.
-from slowapi.errors import RateLimitExceeded
-from fastapi.responses import JSONResponse
-from app.core.limiter import limiter
-from app.core.config import settings
-from app.routes.moderation import router as moderation_router
-from app.routes.auth import router as auth_router
-from app.routes.realtime import router as realtime_router
-from app.routes.explain import router as explain_router
-from app.routes.monitoring import router as monitoring_router
-from app.routes.feedback import router as feedback_router
-from app.routes.stream import router as stream_router
-
-demo.app.state.limiter = limiter
-
-@demo.app.exception_handler(RateLimitExceeded)
-def _rate_limit_handler(request, exc):
-    return JSONResponse(
-        status_code=429,
-        content={"detail": "Rate limit exceeded. Please try again shortly."},
-    )
-
-# Register routes both with and without /api prefix for full backwards compatibility
-_api_routers = [
-    moderation_router,
-    auth_router,
-    realtime_router,
-    explain_router,
-    monitoring_router,
-    feedback_router,
-    stream_router,
-]
-for _r in _api_routers:
-    demo.app.include_router(_r)
-    demo.app.include_router(_r, prefix="/api")
-
-@demo.app.get("/health", tags=["Health"])
-@demo.app.get("/api/health", tags=["Health"])
-def health_check():
-    """Health check endpoint."""
-    return {
-        "status": "healthy",
-        "version": settings.app_version,
-        "model": model_service.status,
-    }
+# ── Mount Gradio onto FastAPI ───────────────────────────────────────────────────
+# Mounts Gradio UI at root path. All FastAPI endpoints (/predict, /health, /docs,
+# /auth/*, etc.) are evaluated first by FastAPI, and unhandled paths fall through to Gradio.
+app = gr.mount_gradio_app(fastapi_app, demo, path="/")
 
 
-# ── HF Space entrypoint ──────────────────────────────────────────────────────────
-# HF Spaces executes `python app.py`. demo.launch() is the correct entrypoint
-# for ZeroGPU spaces — it registers the GPU function with the ZeroGPU daemon
-# and keeps the process alive. gr.mount_gradio_app + uvicorn does NOT work
-# because ZeroGPU's post-startup scanner cannot find @spaces.GPU functions
-# registered through the mount pattern.
+# ── Entry Point ──────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    # Explicit ZeroGPU startup handshake for custom ASGI/FastAPI launchers
+    try:
+        if hasattr(spaces, "config") and getattr(spaces.config.Config, "zero_gpu", False):
+            import spaces.zero  # type: ignore
+            if hasattr(spaces.zero, "startup"):
+                spaces.zero.startup()
+                print("[ZeroGPU] spaces.zero.startup() sent to broker.", flush=True)
+        elif hasattr(spaces, "zero") and hasattr(spaces.zero, "startup"):
+            spaces.zero.startup()  # type: ignore
+            print("[ZeroGPU] spaces.zero.startup() called directly.", flush=True)
+    except Exception as _zg_err:
+        print(f"[ZeroGPU] Startup hook notice: {_zg_err!r}", flush=True)
+
+    import uvicorn
     port = int(os.environ.get("PORT", 7860))
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=port,
-        show_error=True,
-        share=False,
-    )
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
