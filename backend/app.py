@@ -96,10 +96,53 @@ with gr.Blocks(title="ToxiGuard AI") as demo:
 
 
 # ── Attach FastAPI routes to Gradio's internal app ───────────────────────────────
-# Mount the entire FastAPI app as a sub-application at "/api" on Gradio's
-# internal Starlette app. All routes are accessible at /api/<route>.
-# e.g. /api/predict, /api/health, /api/docs
-demo.app.mount("/api", fastapi_app)
+# demo.app is Gradio's internal FastAPI instance. By including all routers
+# directly via include_router(), FastAPI's routing table handles /predict,
+# /predict/demo, /health, etc. natively without routing conflicts.
+from slowapi.errors import RateLimitExceeded
+from fastapi.responses import JSONResponse
+from app.core.limiter import limiter
+from app.core.config import settings
+from app.routes.moderation import router as moderation_router
+from app.routes.auth import router as auth_router
+from app.routes.realtime import router as realtime_router
+from app.routes.explain import router as explain_router
+from app.routes.monitoring import router as monitoring_router
+from app.routes.feedback import router as feedback_router
+from app.routes.stream import router as stream_router
+
+demo.app.state.limiter = limiter
+
+@demo.app.exception_handler(RateLimitExceeded)
+def _rate_limit_handler(request, exc):
+    return JSONResponse(
+        status_code=429,
+        content={"detail": "Rate limit exceeded. Please try again shortly."},
+    )
+
+# Register routes both with and without /api prefix for full backwards compatibility
+_api_routers = [
+    moderation_router,
+    auth_router,
+    realtime_router,
+    explain_router,
+    monitoring_router,
+    feedback_router,
+    stream_router,
+]
+for _r in _api_routers:
+    demo.app.include_router(_r)
+    demo.app.include_router(_r, prefix="/api")
+
+@demo.app.get("/health", tags=["Health"])
+@demo.app.get("/api/health", tags=["Health"])
+def health_check():
+    """Health check endpoint."""
+    return {
+        "status": "healthy",
+        "version": settings.app_version,
+        "model": model_service.status,
+    }
 
 
 # ── HF Space entrypoint ──────────────────────────────────────────────────────────
