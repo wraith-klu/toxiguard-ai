@@ -63,11 +63,21 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 @router.post("/signup", status_code=201)
 def signup(req: SignupRequest, db: Session = Depends(get_db)):
-    """Register a new user and return their API key."""
+    """Register a new user (or update password if re-registering) and return their token and API key."""
     try:
-        existing = db.query(User).filter(User.email == req.email).first()
-        if existing:
-            raise HTTPException(status_code=400, detail="Email already registered")
+        user = db.query(User).filter(User.email == req.email).first()
+        if user:
+            # If user already exists, update password to chosen password
+            user.password_hash = hash_password(req.password)
+            db.commit()
+            db.refresh(user)
+            token = create_access_token({"sub": user.email})
+            return {
+                "message": "Account password updated successfully",
+                "token": token,
+                "api_key": user.api_key,
+                "plan": user.plan,
+            }
 
         user = User(
             email=req.email,
@@ -80,8 +90,10 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(user)
 
+        token = create_access_token({"sub": user.email})
         return {
             "message": "Account created successfully",
+            "token": token,
             "api_key": user.api_key,
             "plan": user.plan,
         }

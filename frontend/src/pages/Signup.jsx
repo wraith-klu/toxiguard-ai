@@ -40,7 +40,8 @@ export default function Signup() {
       if (res.ok && data.api_key) {
         localStorage.setItem("api_key", data.api_key);
         localStorage.setItem("user_email", email);
-        toast.success("Account created successfully");
+        if (data.token) localStorage.setItem("token", data.token);
+        toast.success(data.message || "Account ready! Welcome to ToxiGuard AI");
         navigate("/dashboard");
       } else {
         toast.error(data.detail || "Signup failed");
