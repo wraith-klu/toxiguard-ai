@@ -22,10 +22,10 @@ def _get_openrouter_client() -> OpenAI | None:
     )
 
 OPENROUTER_MODELS = [
-    settings.openrouter_model or "liquid/lfm-2.5-2.6b:free",
-    settings.openrouter_fallback_model or "nvidia/nemotron-3.5-lightning:free",
+    "openrouter/free",
+    "nvidia/nemotron-3.5-lightning:free",
+    "liquid/lfm-2.5-2.6b:free",
     "cohere/north-mini-code:free",
-    "recursive/flint-v1.0:free",
 ]
 
 # ── GEMINI REST CLIENT ────────────────────────────────────────────────────────

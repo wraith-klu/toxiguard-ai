@@ -307,13 +307,19 @@ export default function LiveResult({ loading, result, inputText }) {
     llm.explanation !== "LLM unavailable or parsing failed" &&
     llm.explanation !== "No detailed analysis available. Based on rules and ML signals."
       ? llm.explanation
-      : result?.reason &&
-        result.reason !== "Analysis based on rule engine and ML model signals." &&
-        !result.reason.startsWith("[Demo]")
+      : result?.reason && !result.reason.startsWith("[Demo]")
       ? result.reason
+      : toxic && abusive_words.length > 0
+      ? `The input triggered content safety filters due to detected hostile phrases (${abusive_words.join(', ')}). Direct interpersonal harassment violates communication standards.`
       : null;
 
-  const categoryLabel = formatCategory(llm?.category);
+  const categoryLabel = formatCategory(
+    llm?.category && llm.category.toLowerCase() !== "safe"
+      ? llm.category
+      : toxic
+      ? (severity === "high" ? "harassment" : "abusive")
+      : (llm?.category || "safe")
+  );
 
   const wordsCount = inputText
     ? inputText.trim().split(/\s+/).filter(Boolean).length

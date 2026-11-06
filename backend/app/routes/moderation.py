@@ -560,8 +560,13 @@ def predict(
     else:
         source = "none"
 
-    # ── EXPLANATION ───────────────────────────────────────────────────────────
+    # ── EXPLANATION & CATEGORY COHERENCE ──────────────────────────────────────
     reason = llm_result.get("explanation") or "No explanation available."
+    if toxic and llm_result.get("category", "safe").lower() == "safe":
+        llm_result["category"] = "harassment" if severity == "high" else "toxic"
+
+    if reason and not llm_result.get("explanation"):
+        llm_result["explanation"] = reason
 
     llm_was_used = should_call_llm and (
         llm_result.get("explanation") != _DEFAULT_LLM["explanation"]
