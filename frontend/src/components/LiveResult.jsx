@@ -307,6 +307,10 @@ export default function LiveResult({ loading, result, inputText }) {
     llm.explanation !== "LLM unavailable or parsing failed" &&
     llm.explanation !== "No detailed analysis available. Based on rules and ML signals."
       ? llm.explanation
+      : result?.reason &&
+        result.reason !== "Analysis based on rule engine and ML model signals." &&
+        !result.reason.startsWith("[Demo]")
+      ? result.reason
       : null;
 
   const categoryLabel = formatCategory(llm?.category);
