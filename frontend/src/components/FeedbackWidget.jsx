@@ -182,11 +182,28 @@ export default function FeedbackWidget({ result, inputText }) {
           </div>
 
           <button
-            className="fb-submit-action-btn"
+            className="primary-btn fb-submit-action-btn"
             onClick={() => handleSubmit(selected || "correct")}
             disabled={loading}
+            style={{
+              marginTop: "12px",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              border: "1px solid rgba(224, 122, 56, 0.5)",
+              backgroundColor: "#e07a38",
+              color: "#ffffff",
+              fontWeight: "700",
+              fontSize: "0.85rem",
+              cursor: "pointer",
+              alignSelf: "flex-end",
+              boxShadow: "0 4px 14px rgba(224, 122, 56, 0.45)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              transition: "all 0.2s ease"
+            }}
           >
-            {loading ? "Submitting..." : "Submit Correction"}
+            {loading ? "Submitting..." : "✓ Submit Correction"}
           </button>
         </div>
       )}
