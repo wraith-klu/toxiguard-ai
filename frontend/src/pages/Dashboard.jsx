@@ -126,6 +126,7 @@ export default function Dashboard() {
           text,
           confidence: res.confidence,
           toxic: res.toxic,
+          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
         },
       ]);
     } catch (err) {
@@ -280,6 +281,8 @@ export default function Dashboard() {
               setText(value);
               setActiveTab("analyze");
             }}
+            onGoToAnalyze={() => setActiveTab("analyze")}
+            onClear={() => setHistory([])}
           />
         )}
       </div>
