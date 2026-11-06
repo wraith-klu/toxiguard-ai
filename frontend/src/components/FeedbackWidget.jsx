@@ -185,19 +185,6 @@ export default function FeedbackWidget({ result, inputText }) {
             className="fb-submit-action-btn"
             onClick={() => handleSubmit(selected || "correct")}
             disabled={loading}
-            style={{
-              marginTop: "4px",
-              padding: "6px 16px",
-              borderRadius: "8px",
-              border: "none",
-              background: "var(--accent-indigo)",
-              color: "white",
-              fontWeight: "600",
-              fontSize: "0.78rem",
-              cursor: "pointer",
-              alignSelf: "flex-end",
-              transition: "opacity 0.2s"
-            }}
           >
             {loading ? "Submitting..." : "Submit Correction"}
           </button>
@@ -344,8 +331,38 @@ export default function FeedbackWidget({ result, inputText }) {
           resize: vertical;
         }
 
-        .fb-submit-action-btn:hover {
-          opacity: 0.9;
+        .fb-submit-action-btn {
+          margin-top: 10px;
+          padding: 8px 22px;
+          border-radius: 8px;
+          border: 1px solid rgba(224, 122, 56, 0.4);
+          background: var(--app-accent, #e07a38);
+          color: #ffffff !important;
+          font-weight: 600;
+          font-size: 0.82rem;
+          letter-spacing: 0.02em;
+          cursor: pointer;
+          align-self: flex-end;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 10px rgba(224, 122, 56, 0.35);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .fb-submit-action-btn:hover:not(:disabled) {
+          background: var(--app-accent-hover, #ea8b4e);
+          box-shadow: 0 4px 16px rgba(224, 122, 56, 0.5);
+          transform: translateY(-1px);
+        }
+
+        .fb-submit-action-btn:active:not(:disabled) {
+          transform: translateY(0);
+        }
+
+        .fb-submit-action-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
 
         .fb-btn:disabled {

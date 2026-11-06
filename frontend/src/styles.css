@@ -35,6 +35,7 @@
   --app-accent:           #e07a38;
   --app-accent-hover:     #ea8b4e;
   --app-accent-soft:      rgba(224, 122, 56, 0.15);
+  --accent-indigo:        #6366f1;
   /* Structure */
   --app-rule:             rgba(255, 255, 255, 0.09);
   --app-shadow-lg:        0 20px 48px -12px rgba(0, 0, 0, 0.55);
@@ -101,6 +102,7 @@
   --app-accent:           #A35320;
   --app-accent-hover:     #8A4215;
   --app-accent-soft:      rgba(163, 83, 32, 0.12);
+  --accent-indigo:        #4f46e5;
   /* Structure */
   --app-rule:             rgba(26, 25, 22, 0.12);
   --app-shadow-lg:        0 20px 48px -12px rgba(26, 25, 22, 0.14);
